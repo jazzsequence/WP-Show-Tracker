@@ -151,6 +151,15 @@ class WPST_Options {
 				) );
 			}
 
+		else :
+
+			$cmb->add_field( array(
+				'id'   => 'text_only',
+				'desc' => sprintf( __( 'You need to set up your show tracker with some Viewers first. Click on the <a href="%s">Viewers</a> link under your <a href="%s">Shows</a> menu to add Viewers.', 'wp-show-tracker' ), 'edit-tags.php?taxonomy=wpst_viewer&post_type=wpst_show', 'edit.php?post_type=wpst_show' ),
+				'type' => 'text',
+				'attributes' => array( 'hidden' => 'hidden' ),
+			) );
+
 		endif;
 
 	}
