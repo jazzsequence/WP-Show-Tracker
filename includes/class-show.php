@@ -46,6 +46,7 @@ class WPST_Show extends CPT_Core {
 	 */
 	public function hooks() {
 		add_action( 'cmb2_init', array( $this, 'fields' ) );
+		add_action( 'admin_menu', array( $this, 'remove_metaboxes' ) );
 	}
 
 	/**
@@ -86,5 +87,9 @@ class WPST_Show extends CPT_Core {
 	public function columns_display( $column, $post_id ) {
 		switch ( $column ) {
 		}
+	}
+
+	public function remove_metaboxes() {
+		remove_meta_box( 'tagsdiv-wpst_viewer', 'wpst_show', 'side' );
 	}
 }
