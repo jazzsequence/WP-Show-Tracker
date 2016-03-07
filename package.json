@@ -1,0 +1,17 @@
+{
+	"name": "wp-show-tracker",
+	"title": "WP Show Tracker",
+	"version": "0.1.0",
+	"description": "Track shows that you (or your kids) watch. Set a weekly limit and display an alert when the limit is reached for that viewer.",
+	"author": {
+		"name": "Chris Reynolds",
+		"url": "http://jazzsequence.com"
+	},
+	"license": "GPLv3",
+	"devDependencies": {
+	    "grunt": "latest",
+	    "grunt-contrib-watch": "latest",
+	    "grunt-wp-i18n": "latest",
+	    "load-grunt-tasks": "latest"
+	}
+}
