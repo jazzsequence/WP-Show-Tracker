@@ -34,7 +34,7 @@ class WPST_Viewer extends Taxonomy_Core {
 		// Second parameter is the register taxonomy arguments
 		// Third parameter is post types to attach to.
 		parent::__construct(
-			array( __( 'WP Show Tracker Viewer', 'wp-show-tracker' ), __( 'WP Show Tracker Viewers', 'wp-show-tracker' ), 'wp-show-tracker-viewer' ),
+			array( __( 'Viewer', 'wp-show-tracker' ), __( 'Viewers', 'wp-show-tracker' ), 'wpst_viewer' ),
 			array( 'hierarchical' => false ),
 			array( 'post' )
 		);
