@@ -316,3 +316,8 @@ function wpst() {
 
 // Kick it off
 add_action( 'plugins_loaded', array( wpst(), 'hooks' ) );
+
+/**
+ * @todo Figure out a way to use electron to build a standalone app the contains a
+ * webserver to run a wp instance that uses this plugin.
+ */
