@@ -139,5 +139,19 @@ class WPST_Options {
 		// Get the viewers and loop through them.
 		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 
+		if ( ! empty( $viewers ) && ! is_wp_error( $viewers ) ) :
+
+			foreach ( $viewers as $viewer ) {
+				$cmb->add_field( array(
+					'name'    => sprintf( __( '%s Max Shows', 'wp-show-tracker' ), $viewer->name ),
+					'desc'    => sprintf( __( 'Maximum number of shows for %s. Use 0 for unlimited.', 'wp-show-tracker' ), $viewer->name ),
+					'id'      => $viewer->slug . '-max-shows', // no prefix needed
+					'type'    => 'text_small',
+					'default' => '0',
+				) );
+			}
+
+		endif;
+
 	}
 }
