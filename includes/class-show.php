@@ -56,7 +56,7 @@ class WPST_Show extends CPT_Core {
 	 * @return void
 	 */
 	public function fields() {
-		$prefix = 'wp_show_tracker_show_';
+		$prefix = 'wpst_';
 
 		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'metabox',
