@@ -2,19 +2,24 @@
 /**
  * WP Show Tracker Show
  *
- * @version 0.1.0
+ * @version 0.2.0
  * @package WP Show Tracker
  */
 
-require_once dirname(__FILE__) . '/../vendor/cpt-core/CPT_Core.php';
-require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
+require_once dirname( __FILE__ ) . '/../vendor/cpt-core/CPT_Core.php';
+require_once dirname( __FILE__ ) . '/../vendor/cmb2/init.php';
 
+/**
+ * WPST_Show Class
+ *
+ * @since  0.1.0
+ */
 class WPST_Show extends CPT_Core {
 	/**
 	 * Parent plugin class
 	 *
-	 * @var class
-	 * @since  NEXT
+	 * @var   class
+	 * @since 0.1.0
 	 */
 	protected $plugin = null;
 
@@ -22,7 +27,7 @@ class WPST_Show extends CPT_Core {
 	 * Constructor
 	 * Register Custom Post Types. See documentation in CPT_Core, and in wp-includes/post.php
 	 *
-	 * @since  NEXT
+	 * @since  0.1.0
 	 * @param  object $plugin Main plugin object.
 	 * @return void
 	 */
@@ -41,7 +46,7 @@ class WPST_Show extends CPT_Core {
 	/**
 	 * Initiate our hooks
 	 *
-	 * @since  NEXT
+	 * @since  0.1.0
 	 * @return void
 	 */
 	public function hooks() {
@@ -52,7 +57,7 @@ class WPST_Show extends CPT_Core {
 	/**
 	 * Add custom fields to the CPT
 	 *
-	 * @since  NEXT
+	 * @since  0.2.0
 	 * @return void
 	 */
 	public function fields() {
@@ -95,7 +100,7 @@ class WPST_Show extends CPT_Core {
 	/**
 	 * Registers admin columns to display. Hooked in via CPT_Core.
 	 *
-	 * @since  NEXT
+	 * @since  0.1.0
 	 * @param  array $columns Array of registered column names/labels.
 	 * @return array          Modified array
 	 */
@@ -107,7 +112,7 @@ class WPST_Show extends CPT_Core {
 	/**
 	 * Handles admin column display. Hooked in via CPT_Core.
 	 *
-	 * @since  NEXT
+	 * @since 0.1.0
 	 * @param array $column  Column currently being rendered.
 	 * @param int   $post_id ID of post to display column for.
 	 */
@@ -116,6 +121,11 @@ class WPST_Show extends CPT_Core {
 		}
 	}
 
+
+	/**
+	 * Remove default WordPress metaboxes.
+	 * @since 0.2.0
+	 */
 	public function remove_metaboxes() {
 		remove_meta_box( 'tagsdiv-wpst_viewer', 'wpst_show', 'side' );
 	}

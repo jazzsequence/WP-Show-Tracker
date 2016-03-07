@@ -3,7 +3,7 @@
  * Plugin Name: WP Show Tracker
  * Plugin URI:  http://jazzsequence.com
  * Description: Track shows that you (or your kids) watch. Set a weekly limit and display an alert when the limit is reached for that viewer.
- * Version:     0.1.0
+ * Version:     0.2.0
  * Author:      Chris Reynolds
  * Author URI:  http://jazzsequence.com
  * Donate link: http://jazzsequence.com
@@ -74,7 +74,7 @@ class WP_Show_Tracker {
 	 * @var  string
 	 * @since  0.1.0
 	 */
-	const VERSION = '0.1.0';
+	const VERSION = '0.2.0';
 
 	/**
 	 * URL of plugin directory
