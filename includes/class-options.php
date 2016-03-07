@@ -136,17 +136,8 @@ class WPST_Options {
 			),
 		) );
 
-		/*
-		Add your fields here
-
-		$cmb->add_field( array(
-			'name'    => __( 'Test Text', 'myprefix' ),
-			'desc'    => __( 'field description (optional)', 'myprefix' ),
-			'id'      => 'test_text', // no prefix needed
-			'type'    => 'text',
-			'default' => __( 'Default Text', 'myprefix' ),
-		) );
-		*/
+		// Get the viewers and loop through them.
+		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 
 	}
 }
