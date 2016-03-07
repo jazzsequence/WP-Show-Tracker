@@ -57,7 +57,7 @@ class WPST_Options {
 		$this->plugin = $plugin;
 		$this->hooks();
 
-		$this->title = __( 'WP Show Tracker Options', 'wp-show-tracker' );
+		$this->title = __( 'Show Tracker', 'wp-show-tracker' );
 	}
 
 	/**
@@ -89,8 +89,9 @@ class WPST_Options {
 	 * @return void
 	 */
 	public function add_options_page() {
-		$this->options_page = add_menu_page(
-			$this->title,
+		$this->options_page = add_submenu_page(
+			'options-general.php',
+			sprintf( __( '%s Options', 'wp-show-tracker' ), $this->title ),
 			$this->title,
 			'manage_options',
 			$this->key,
