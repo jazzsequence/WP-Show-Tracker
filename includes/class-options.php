@@ -1,13 +1,13 @@
 <?php
 /**
- * WP Show Tracker Wpst_options
+ * WP Show Tracker Options
  * @version 0.1.0
  * @package WP Show Tracker
  */
 
 require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
 
-class WPST_Wpst_options {
+class WPST_Options {
 	/**
 	 * Parent plugin class
 	 *
@@ -22,7 +22,7 @@ class WPST_Wpst_options {
 	 * @var    string
 	 * @since  NEXT
 	 */
-	protected $key = 'wp_show_tracker_wpst_options';
+	protected $key = 'wp_show_tracker_options';
 
 	/**
 	 * Options page metabox id
@@ -30,7 +30,7 @@ class WPST_Wpst_options {
 	 * @var    string
 	 * @since  NEXT
 	 */
-	protected $metabox_id = 'wp_show_tracker_wpst_options_metabox';
+	protected $metabox_id = 'wp_show_tracker_options_metabox';
 
 	/**
 	 * Options Page title
@@ -57,7 +57,7 @@ class WPST_Wpst_options {
 		$this->plugin = $plugin;
 		$this->hooks();
 
-		$this->title = __( 'WP Show Tracker Wpst_options', 'wp-show-tracker' );
+		$this->title = __( 'WP Show Tracker Options', 'wp-show-tracker' );
 	}
 
 	/**
