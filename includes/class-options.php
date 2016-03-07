@@ -92,7 +92,7 @@ class WPST_Options {
 		$this->options_page = add_submenu_page(
 			'edit.php?post_type=wpst_show',
 			sprintf( __( '%s Options', 'wp-show-tracker' ), $this->title ),
-			$this->title,
+			__( 'Options', 'wp-show-tracker' ),
 			'manage_options',
 			$this->key,
 			array( $this, 'admin_page_display' )
