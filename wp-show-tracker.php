@@ -143,7 +143,9 @@ class WP_Show_Tracker {
 	 */
 	public function plugin_classes() {
 		// Attach other plugin classes to the base plugin class.
-		// $this->plugin_class = new WPST_Plugin_Class( $this );
+		$this->show    = new WPST_Show( $this );
+		$this->viewer  = new WPST_Viewer( $this );
+		$this->options = new WPST_Options( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
