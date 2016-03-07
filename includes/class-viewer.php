@@ -36,7 +36,7 @@ class WPST_Viewer extends Taxonomy_Core {
 		parent::__construct(
 			array( __( 'Viewer', 'wp-show-tracker' ), __( 'Viewers', 'wp-show-tracker' ), 'wpst_viewer' ),
 			array( 'hierarchical' => false ),
-			array( 'post' )
+			array( 'wpst_show' )
 		);
 	}
 
