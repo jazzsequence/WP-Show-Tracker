@@ -5,7 +5,7 @@
  * @package WP Show Tracker
  */
 
-require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
+require_once dirname( __FILE__ ) . '/../vendor/cmb2/init.php';
 
 class WPST_Options {
 	/**
