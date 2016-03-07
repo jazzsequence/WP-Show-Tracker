@@ -60,8 +60,35 @@ class WPST_Show extends CPT_Core {
 
 		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'metabox',
-			'title'         => __( 'WP Show Tracker Show Meta Box', 'wp-show-tracker' ),
-			'object_types'  => array( 'wp-show-tracker-show' ),
+			'title'         => __( 'Show Information', 'wp-show-tracker' ),
+			'object_types'  => array( 'wpst_show' ),
+		) );
+
+		$cmb->add_field( array(
+			'name'       => __( 'Viewer', 'wp-show-tracker' ),
+			'id'         => $prefix . 'viewer',
+			'desc'       => __( 'Who watched this show?', 'wp-show-tracker' ),
+			'type'       => 'taxonomy_radio',
+			'taxonomy'   => 'wpst_viewer',
+			'attributes' => array( 'required' => 'required' ),
+			'show_option_none' => false,
+		) );
+
+		$cmb->add_field( array(
+			'name'       => __( 'Count', 'wp-show-tracker' ),
+			'id'         => $prefix . 'count',
+			'desc'       => __( 'How many shows watched in this sitting.', 'wp-show-tracker' ),
+			'default'    => '1',
+			'type'       => 'text_small',
+			'attributes' => array( 'required' => 'required' ),
+		) );
+
+		$cmb->add_field( array(
+			'name'       => __( 'Date', 'wp-show-tracker' ),
+			'id'         => $prefix . 'date',
+			'desc'       => __( 'When was this show watched?', 'wp-show-tracker' ),
+			'type'       => 'text_date_timestamp',
+			'default'    => strtotime( 'today' ),
 		) );
 	}
 
