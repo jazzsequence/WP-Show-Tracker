@@ -33,8 +33,8 @@ class WPST_Show extends CPT_Core {
 		// Register this cpt
 		// First parameter should be an array with Singular, Plural, and Registered name.
 		parent::__construct(
-			array( 'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ) )
 			array( __( 'Show', 'wp-show-tracker' ), __( 'Shows', 'wp-show-tracker' ), 'wpst_show' ),
+			array( 'supports' => array( 'title' ) )
 		);
 	}
 
