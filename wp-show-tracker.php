@@ -192,7 +192,7 @@ class WP_Show_Tracker {
 			load_plugin_textdomain( 'wp-show-tracker', false, dirname( $this->basename ) . '/languages/' );
 		}
 
-		require_once( dirname( __FILE__ ) . '/vendor/cmb2-front-end-editor.php' );
+		require_once( dirname( __FILE__ ) . '/vendor/cmb2-front-end-form.php' );
 	}
 
 	/**
