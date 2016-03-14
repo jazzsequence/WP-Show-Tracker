@@ -68,7 +68,7 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 	// Get any submission errors.
 	if ( ( $error = $cmb->prop( 'submission_error' ) ) && is_wp_error( $error ) ) {
 		// If there was an error with the submission, add it to our ouput.
-		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wp-show-tracker' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
+		$output .= apply_filters( 'wpst_submission_error_message', '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wp-show-tracker' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>' );
 	}
 
 	// If the post was submitted successfully, notify the user.
@@ -79,11 +79,13 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 		$name = $name ? ' '. $name : '';
 
 		// Add notice of submission to our output.
-		$output .= '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>';
+		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>' );
 	}
 
+	$output .= apply_filters( 'wpst_before_show_form', '' );
+
 	// Get our form.
-	$output .= cmb2_get_metabox_form( $cmb, 'fake-oject-id', array( 'save_button' => __( 'Submit Post', 'wds-post-submit' ) ) );
+	$output .= apply_filters( 'wpst_cmb2_post_form', cmb2_get_metabox_form( $cmb, 'fake-oject-id', array( 'save_button' => __( 'Submit Show', 'wp-show-tracker' ) ) ) );
 
 	return $output;
 }
