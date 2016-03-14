@@ -162,5 +162,22 @@ class WPST_Options {
 
 		endif;
 
+		$cmb->add_field( array(
+			'name'    => __( 'Start Week on', 'wp-show-tracker' ),
+			'desc'    => __( 'What day should the week start on?', 'wp-show-tracker' ),
+			'default' => 'sunday',
+			'options' => array(
+				'sunday'    => __( 'Sunday',' wp-show-tracker' ),
+				'monday'    => __( 'Monday',' wp-show-tracker' ),
+				'tuesday'   => __( 'Tuesday',' wp-show-tracker' ),
+				'wednesday' => __( 'Wednesday',' wp-show-tracker' ),
+				'thursday'  => __( 'Thursday',' wp-show-tracker' ),
+				'friday'    => __( 'Friday',' wp-show-tracker' ),
+				'saturday'  => __( 'Saturday',' wp-show-tracker' ),
+			),
+			'type'    => 'select',
+			'id'      => 'wpst_start_day',
+		) );
+
 	}
 }
