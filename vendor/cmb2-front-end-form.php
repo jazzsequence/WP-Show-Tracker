@@ -43,10 +43,10 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 
 	// Parse attributes
 	$atts = shortcode_atts( array(
-		'post_author' => $user_id ? $user_id : 1, // Current user, or admin
-		'post_status' => 'pending',
-		'post_type'   => reset( $post_types ), // Only use first object_type in array
-	), $atts, 'cmb-frontend-form' );
+		'post_author' => $user_id ? $user_id : 1, // Current user, or admin.
+		'post_status' => 'publish',
+		'post_type'   => 'wpst_show',
+	), $atts, 'wp-show-tracker' );
 
 	/*
 	 * Let's add these attributes as hidden fields to our cmb form
@@ -87,7 +87,7 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 
 	return $output;
 }
-add_shortcode( 'cmb-frontend-form', 'wds_do_frontend_form_submission_shortcode' );
+add_shortcode( 'wp-show-tracker', 'wds_do_frontend_form_submission_shortcode' );
 
 /**
  * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
