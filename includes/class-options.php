@@ -180,4 +180,18 @@ class WPST_Options {
 		) );
 
 	}
+
+	/**
+	 * Option getter helper function.
+	 * @param  string $option_key An option key to get. If it's invalid, we'll do a wp_die.
+	 * @return string             The value for the requested option key.
+	 */
+	public function get_option( $option_key ) {
+		$options = get_option( $this->key );
+		if ( ! isset( $options[ $option_key ] ) ) {
+			wp_die( esc_attr__( 'Error getting option value.  Option does not exist.', 'wp-show-tracker' ) );
+		}
+
+		return $options[ $option_key ];
+	}
 }
