@@ -68,7 +68,7 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 	// Get any submission errors
 	if ( ( $error = $cmb->prop( 'submission_error' ) ) && is_wp_error( $error ) ) {
 		// If there was an error with the submission, add it to our ouput.
-		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wds-post-submit' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
+		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wp-show-tracker' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
 	}
 
 	// If the post was submitted successfully, notify the user.
@@ -116,17 +116,17 @@ function wds_handle_frontend_new_post_form_submission() {
 
 	// Check security nonce
 	if ( ! isset( $_POST[ $cmb->nonce() ] ) || ! wp_verify_nonce( $_POST[ $cmb->nonce() ], $cmb->nonce() ) ) {
-		return $cmb->prop( 'submission_error', new WP_Error( 'security_fail', __( 'Security check failed.' ) ) );
+		return $cmb->prop( 'submission_error', new WP_Error( 'security_fail', __( 'Security check failed.', 'wp-show-tracker' ) ) );
 	}
 
 	// Check title submitted
 	if ( empty( $_POST['submitted_post_title'] ) ) {
-		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'New post requires a title.' ) ) );
+		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'New post requires a title.', 'wp-show-tracker' ) ) );
 	}
 
 	// And that the title is not the default title
 	if ( $cmb->get_field( 'submitted_post_title' )->default() == $_POST['submitted_post_title'] ) {
-		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Please enter a new title.' ) ) );
+		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Please enter a new title.', 'wp-show-tracker' ) ) );
 	}
 
 	/**
