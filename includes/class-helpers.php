@@ -19,7 +19,6 @@ class WPST_Helpers {
 	 *
 	 * @since  NEXT
 	 * @param  object $plugin Main plugin object.
-	 * @return void
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
@@ -30,7 +29,6 @@ class WPST_Helpers {
 	 * Initiate our hooks
 	 *
 	 * @since  NEXT
-	 * @return void
 	 */
 	public function hooks() {
 	}
