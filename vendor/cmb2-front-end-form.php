@@ -14,34 +14,34 @@
  * @return CMB2 object
  */
 function wds_frontend_cmb2_get() {
-	// Use ID of metabox in wds_frontend_form_register
+	// Use ID of metabox in wpst_show post type. See WPST_Show.
 	$metabox_id = 'wpst_show_metabox';
 
-	// Post/object ID is not applicable since we're using this form for submission
+	// Post/object ID is not applicable since we're using this form for submission.
 	$object_id  = 'fake-oject-id';
 
-	// Get CMB2 metabox object
+	// Get CMB2 metabox object.
 	return cmb2_get_metabox( $metabox_id, $object_id );
 }
 
 /**
  * Handle the cmb-frontend-form shortcode
  *
- * @param  array  $atts Array of shortcode attributes
+ * @param  array  $atts Array of shortcode attributes.
  * @return string       Form html
  */
 function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 
-	// Get CMB2 metabox object
+	// Get CMB2 metabox object.
 	$cmb = wds_frontend_cmb2_get();
 
-	// Get $cmb object_types
+	// Get $cmb object_types.
 	$post_types = $cmb->prop( 'object_types' );
 
-	// Current user
+	// Current user.
 	$user_id = get_current_user_id();
 
-	// Parse attributes
+	// Parse attributes.
 	$atts = shortcode_atts( array(
 		'post_author' => $user_id ? $user_id : 1, // Current user, or admin.
 		'post_status' => 'publish',
@@ -62,10 +62,10 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 		) );
 	}
 
-	// Initiate our output variable
+	// Initiate our output variable.
 	$output = '';
 
-	// Get any submission errors
+	// Get any submission errors.
 	if ( ( $error = $cmb->prop( 'submission_error' ) ) && is_wp_error( $error ) ) {
 		// If there was an error with the submission, add it to our ouput.
 		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wp-show-tracker' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
@@ -74,15 +74,15 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 	// If the post was submitted successfully, notify the user.
 	if ( isset( $_GET['post_submitted'] ) && ( $post = get_post( absint( $_GET['post_submitted'] ) ) ) ) {
 
-		// Get submitter's name
+		// Get submitter's name.
 		$name = get_user_meta( $user_id, 'display_name' );
 		$name = $name ? ' '. $name : '';
 
-		// Add notice of submission to our output
+		// Add notice of submission to our output.
 		$output .= '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>';
 	}
 
-	// Get our form
+	// Get our form.
 	$output .= cmb2_get_metabox_form( $cmb, 'fake-oject-id', array( 'save_button' => __( 'Submit Post', 'wds-post-submit' ) ) );
 
 	return $output;
@@ -96,17 +96,17 @@ add_shortcode( 'wp-show-tracker', 'wds_do_frontend_form_submission_shortcode' );
  */
 function wds_handle_frontend_new_post_form_submission() {
 
-	// If no form submission, bail
+	// If no form submission, bail.
 	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) ) {
 		return false;
 	}
 
-	// Get CMB2 metabox object
+	// Get CMB2 metabox object.
 	$cmb = wds_frontend_cmb2_get();
 
 	$post_data = array();
 
-	// Get our shortcode attributes and set them as our initial post_data args
+	// Get our shortcode attributes and set them as our initial post_data args.
 	if ( isset( $_POST['atts'] ) ) {
 		foreach ( (array) $_POST['atts'] as $key => $value ) {
 			$post_data[ $key ] = sanitize_text_field( $value );
@@ -114,17 +114,17 @@ function wds_handle_frontend_new_post_form_submission() {
 		unset( $_POST['atts'] );
 	}
 
-	// Check security nonce
+	// Check security nonce.
 	if ( ! isset( $_POST[ $cmb->nonce() ] ) || ! wp_verify_nonce( $_POST[ $cmb->nonce() ], $cmb->nonce() ) ) {
 		return $cmb->prop( 'submission_error', new WP_Error( 'security_fail', __( 'Security check failed.', 'wp-show-tracker' ) ) );
 	}
 
-	// Check title submitted
+	// Check title submitted.
 	if ( empty( $_POST['submitted_post_title'] ) ) {
 		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'New post requires a title.', 'wp-show-tracker' ) ) );
 	}
 
-	// And that the title is not the default title
+	// And that the title is not the default title.
 	if ( $cmb->get_field( 'submitted_post_title' )->default() == $_POST['submitted_post_title'] ) {
 		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Please enter a new title.', 'wp-show-tracker' ) ) );
 	}
@@ -134,16 +134,16 @@ function wds_handle_frontend_new_post_form_submission() {
 	 */
 	$sanitized_values = $cmb->get_sanitized_values( $_POST );
 
-	// Set our post data arguments
+	// Set our post data arguments.
 	$post_data['post_title']   = $sanitized_values['submitted_post_title'];
 	unset( $sanitized_values['submitted_post_title'] );
 	$post_data['post_content'] = $sanitized_values['submitted_post_content'];
 	unset( $sanitized_values['submitted_post_content'] );
 
-	// Create the new post
+	// Create the new post.
 	$new_submission_id = wp_insert_post( $post_data, true );
 
-	// If we hit a snag, update the user
+	// If we hit a snag, update the user.
 	if ( is_wp_error( $new_submission_id ) ) {
 		return $cmb->prop( 'submission_error', $new_submission_id );
 	}
@@ -155,7 +155,7 @@ function wds_handle_frontend_new_post_form_submission() {
 	unset( $post_data['post_type'] );
 	unset( $post_data['post_status'] );
 
-	// Loop through remaining (sanitized) data, and save to post-meta
+	// Loop through remaining (sanitized) data, and save to post-meta.
 	foreach ( $sanitized_values as $key => $value ) {
 		if ( is_array( $value ) ) {
 			$value = array_filter( $value );
