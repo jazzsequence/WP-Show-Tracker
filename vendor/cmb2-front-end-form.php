@@ -13,7 +13,7 @@
  *
  * @return CMB2 object
  */
-function wds_frontend_cmb2_get() {
+function wpst_frontend_cmb2_get() {
 	// Use ID of metabox in wpst_show post type. See WPST_Show.
 	$metabox_id = 'wpst_show_metabox';
 
@@ -30,10 +30,10 @@ function wds_frontend_cmb2_get() {
  * @param  array  $atts Array of shortcode attributes.
  * @return string       Form html
  */
-function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
+function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 
 	// Get CMB2 metabox object.
-	$cmb = wds_frontend_cmb2_get();
+	$cmb = wpst_frontend_cmb2_get();
 
 	// Get $cmb object_types.
 	$post_types = $cmb->prop( 'object_types' );
@@ -87,14 +87,14 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 
 	return $output;
 }
-add_shortcode( 'wp-show-tracker', 'wds_do_frontend_form_submission_shortcode' );
+add_shortcode( 'wp-show-tracker', 'wpst_do_frontend_form_submission_shortcode' );
 
 /**
  * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
  *
  * @return mixed
  */
-function wds_handle_frontend_new_post_form_submission() {
+function wpst_handle_frontend_new_post_form_submission() {
 
 	// If no form submission, bail.
 	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) ) {
@@ -102,7 +102,7 @@ function wds_handle_frontend_new_post_form_submission() {
 	}
 
 	// Get CMB2 metabox object.
-	$cmb = wds_frontend_cmb2_get();
+	$cmb = wpst_frontend_cmb2_get();
 
 	$post_data = array();
 
@@ -174,4 +174,4 @@ function wds_handle_frontend_new_post_form_submission() {
 	wp_redirect( esc_url_raw( add_query_arg( 'post_submitted', $new_submission_id ) ) );
 	exit;
 }
-add_action( 'cmb2_after_init', 'wds_handle_frontend_new_post_form_submission' );
+add_action( 'cmb2_after_init', 'wpst_handle_frontend_new_post_form_submission' );
