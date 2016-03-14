@@ -92,7 +92,7 @@ add_shortcode( 'wp-show-tracker', 'wds_do_frontend_form_submission_shortcode' );
 /**
  * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
  *
- * @return void
+ * @return mixed
  */
 function wds_handle_frontend_new_post_form_submission() {
 
@@ -159,7 +159,7 @@ function wds_handle_frontend_new_post_form_submission() {
 	foreach ( $sanitized_values as $key => $value ) {
 		if ( is_array( $value ) ) {
 			$value = array_filter( $value );
-			if( ! empty( $value ) ) {
+			if ( ! empty( $value ) ) {
 				update_post_meta( $new_submission_id, $key, $value );
 			}
 		} else {
