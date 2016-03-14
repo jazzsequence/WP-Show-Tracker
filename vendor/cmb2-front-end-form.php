@@ -27,8 +27,8 @@ function wpst_frontend_cmb2_get() {
 /**
  * Handle the cmb-frontend-form shortcode
  *
- * @param  array  $atts Array of shortcode attributes.
- * @return string       Form html
+ * @param  array $atts Array of shortcode attributes.
+ * @return string      Form html
  */
 function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 
