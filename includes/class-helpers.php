@@ -96,4 +96,21 @@ class WPST_Helpers {
 
 		return true;
 	}
+
+	/**
+	 * Checks to make sure a value was passed and that the viewer exists. If either fail, returns a wp_die message.
+	 * @uses   viewer_exists  Relies on the internal method viewer_exists which uses get_term_by to determine if the viewer is a valid taxonomy term.
+	 * @param  string $viewer A wpst_viewer term slug.
+	 */
+	public function viewer_die( $viewer = '' ) {
+		// If no viewer was passed, bail.
+		if ( '' == $viewer ) {
+			wp_die( esc_attr__( 'No viewer was given. You need to pass a valid viewer slug to <code>wpst_get_max_shows_for</code>', 'wp-show-tracker' ), esc_attr__( 'Error in wpst_get_max_shows_for', 'wp-show-tracker' ) );
+		}
+
+		// If a viewer was passed but it wasn't valid, bail.
+		if ( ! wp_show_tracker()->helpers->viewer_exists( $viewer ) ) {
+			wp_die( esc_attr__( 'A viewer was passed to <code>wpst_get_max_shows_for</code> but that viewer did not exist or was not recognized as a valid viewer.', 'wp-show-tracker' ), esc_attr__( 'Error in wpst_get_max_shows_for', 'wp-show-tracker' ) );
+		}
+	}
 }
