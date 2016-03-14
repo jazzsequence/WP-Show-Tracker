@@ -75,7 +75,7 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 	if ( isset( $_GET['post_submitted'] ) && ( $post = get_post( absint( $_GET['post_submitted'] ) ) ) ) {
 
 		// Get submitter's name
-		$name = get_post_meta( $post->ID, 'submitted_author_name', 1 );
+		$name = get_user_meta( $user_id, 'display_name' );
 		$name = $name ? ' '. $name : '';
 
 		// Add notice of submission to our output
