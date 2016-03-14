@@ -80,4 +80,20 @@ class WPST_Helpers {
 
 		return $count;
 	}
+
+	/**
+	 * Checks if the viewer term exists.
+	 * @uses   get_term_by    This check uses get_term_by which isn't recommended for resource reasons. As such, internally we never perform this check but it's used in all the template tags to determine if the viewer is a valid viewer.
+	 * @param  string $viewer A wpst_viewer term slug.
+	 * @return bool           Whether the viewer term exists.
+	 */
+	public function viewer_exists( $viewer ) {
+		$viewer_obj = get_term_by( 'slug', $viewer, 'wpst_viewer' );
+
+		if ( is_wp_error( $viewer_obj ) || ! $viewer_obj ) {
+			return false;
+		}
+
+		return true;
+	}
 }
