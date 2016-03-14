@@ -72,6 +72,16 @@ class WPST_Show extends CPT_Core {
 			'object_types'  => array( 'wpst_show' ),
 		) );
 
+		if ( ! is_admin() ) {
+			$cmb->add_field( array(
+				'name'       => __( 'Show Title', 'wp-show-tracker' ),
+				'id'         => 'submitted_post_title',
+				'desc'       => __( 'The name of the show, episode or movie.', 'wp-show-tracker' ),
+				'type'       => 'text',
+				'attributes' => array( 'required' => 'required' ),
+			) );
+		}
+
 		$cmb->add_field( array(
 			'name'       => __( 'Viewer', 'wp-show-tracker' ),
 			'id'         => $prefix . 'viewer',
