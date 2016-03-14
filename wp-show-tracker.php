@@ -146,6 +146,10 @@ class WP_Show_Tracker {
 		$this->show    = new WPST_Show( $this );
 		$this->viewer  = new WPST_Viewer( $this );
 		$this->options = new WPST_Options( $this );
+		$this->helpers = new WPST_Helpers( $this );
+
+		// Include the template tags file.
+		require_once( $this->basename . '/includes/template-tags' );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
