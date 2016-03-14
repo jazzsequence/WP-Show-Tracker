@@ -39,7 +39,10 @@ class WPST_Show extends CPT_Core {
 		// First parameter should be an array with Singular, Plural, and Registered name.
 		parent::__construct(
 			array( __( 'Show', 'wp-show-tracker' ), __( 'Shows', 'wp-show-tracker' ), 'wpst_show' ),
-			array( 'supports' => array( 'title' ) )
+			array(
+				'supports'  => array( 'title' ),
+				'menu_icon' => 'dashicons-editor-video',
+			)
 		);
 	}
 

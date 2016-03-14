@@ -168,7 +168,7 @@ class WP_Show_Tracker {
 	 * @return void
 	 */
 	function _activate() {
-		// Make sure any rewrite functionality has been loaded
+		// Make sure any rewrite functionality has been loaded.
 		flush_rewrite_rules();
 	}
 
