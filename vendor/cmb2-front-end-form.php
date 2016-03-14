@@ -15,7 +15,7 @@
  */
 function wds_frontend_cmb2_get() {
 	// Use ID of metabox in wds_frontend_form_register
-	$metabox_id = 'front-end-post-form';
+	$metabox_id = 'wpst_show_metabox';
 
 	// Post/object ID is not applicable since we're using this form for submission
 	$object_id  = 'fake-oject-id';
