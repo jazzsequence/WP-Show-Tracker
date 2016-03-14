@@ -1,6 +1,11 @@
 <?php
 /**
+ * CMB2 Front End Form
+ *
+ * Fork of CMB2 front-end form snippet available here: https://github.com/WebDevStudios/CMB2-Snippet-Library/blob/master/front-end/cmb2-front-end-submit.php
+ *
  * @link http://webdevstudios.com/2015/03/30/use-cmb2-to-create-a-new-post-submission-form/ Original tutorial
+ * @package WP_Show_Tracker
  */
 
 
