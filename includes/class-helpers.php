@@ -41,4 +41,13 @@ class WPST_Helpers {
 	public function get_max_shows_for_viewer( $viewer ) {
 		return ( wp_show_tracker()->options->get_option( $viewer . '-max-shows' ) ) ? absint( wp_show_tracker()->options->get_option( $viewer . '-max-shows' ) ) : 0;
 	}
+
+	/**
+	 * Get the start day for the week. Defaults to Sunday.
+	 * @return string The start day of the week.
+	 */
+	public function get_start_day() {
+		return ( wp_show_tracker()->options->get_option( 'wpst_start_day' ) ) ? esc_attr( wp_show_tracker()->options->get_option( 'wpst_start_day' ) ) : 'sunday';
+	}
+
 }
