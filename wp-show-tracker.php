@@ -149,7 +149,7 @@ class WP_Show_Tracker {
 		$this->helpers = new WPST_Helpers( $this );
 
 		// Include the template tags file.
-		require_once( $this->basename . '/includes/template-tags.php' );
+		require_once( $this->path . '/includes/template-tags.php' );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
