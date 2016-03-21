@@ -151,10 +151,16 @@ function wpst_handle_frontend_new_post_form_submission() {
 		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Please enter a new title.', 'wp-show-tracker' ) ) );
 	}
 
+	// Make sure we have a viewer set.
+	if ( $cmb->get_field( 'wpst_show_viewer' )->default() == $_POST['wpst_show_viewer'] ) {
+		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Show needs a viewer.', 'wp-show-tracker' ) ) );
+	}
+
 	/**
 	 * Fetch sanitized values
 	 */
-	$sanitized_values = $cmb->get_sanitized_values( $_POST );
+	$sanitized_values                     = $cmb->get_sanitized_values( $_POST );
+	$sanitized_values['wpst_show_viewer'] = wpst_sanitize_viewer( $_POST['wpst_show_viewer'] );
 
 	// Set our post data arguments.
 	$post_data['post_title']   = $sanitized_values['submitted_post_title'];
