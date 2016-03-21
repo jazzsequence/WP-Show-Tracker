@@ -164,9 +164,8 @@ function wpst_handle_frontend_new_post_form_submission() {
 
 	// Set our post data arguments.
 	$post_data['post_title']   = $sanitized_values['submitted_post_title'];
+	$post_data['post_content'] = ''; // No post content but can't be NULL.
 	unset( $sanitized_values['submitted_post_title'] );
-	$post_data['post_content'] = $sanitized_values['submitted_post_content'];
-	unset( $sanitized_values['submitted_post_content'] );
 
 	// Create the new post.
 	$new_submission_id = wp_insert_post( $post_data, true );
