@@ -73,7 +73,7 @@ class WPST_Helpers {
 		// Loop through this week's shows and tally up the total count.
 		$count = 0;
 		foreach ( $shows as $show ) {
-			if ( $show_count = get_post_meta( $show['ID'], 'wpst_show_count', true ) ) {
+			if ( $show_count = get_post_meta( $show->ID, 'wpst_show_count', true ) ) {
 				$count = $count + absint( $show_count );
 			}
 		}
