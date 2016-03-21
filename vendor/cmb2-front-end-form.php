@@ -92,6 +92,26 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 add_shortcode( 'wp-show-tracker', 'wpst_do_frontend_form_submission_shortcode' );
 
 /**
+ * Sanitizes the viewer slug and makes sure the term exists.
+ * @param  string $viewer The slug for the viewer passed from the form.
+ * @return string         The sanitized viewer slug.
+ */
+function wpst_sanitize_viewer( $viewer = '' ) {
+	// If no viewer is passed, we have a problem.
+	if ( '' == $viewer ) {
+		return new WP_Error( 'post_data_missing', __( 'Show needs a viewer.', 'wp-show-tracker' ) );
+	}
+
+	$viewer = sanitize_title( $viewer );
+
+	if ( ! term_exists( $viewer, 'wpst_viewer' ) ) {
+		return new WP_Error( 'post_data_missing', __( 'Viewer does not exist.', 'wp-show-tracker' ) );
+	}
+
+	return $viewer;
+}
+
+/**
  * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
  *
  * @return mixed
