@@ -195,6 +195,9 @@ function wpst_handle_frontend_new_post_form_submission() {
 		} else {
 			update_post_meta( $new_submission_id, $key, $value );
 		}
+
+		// Add the viewer to the show.
+		wp_set_object_terms( $new_submission_id, $post_data['wpst_show_viewer'], 'wpst_viewer' );
 	}
 
 	/*
