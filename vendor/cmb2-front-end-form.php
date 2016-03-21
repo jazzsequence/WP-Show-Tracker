@@ -163,11 +163,11 @@ function wpst_handle_frontend_new_post_form_submission() {
 	 * Fetch sanitized values
 	 */
 	$sanitized_values                     = $cmb->get_sanitized_values( $_POST );
-	$sanitized_values['wpst_show_viewer'] = wpst_sanitize_viewer( $_POST['wpst_show_viewer'] );
 
 	// Set our post data arguments.
-	$post_data['post_title']   = $sanitized_values['submitted_post_title'];
-	$post_data['post_content'] = ''; // No post content but can't be NULL.
+	$post_data['post_title']       = $sanitized_values['submitted_post_title'];
+	$post_data['wpst_show_viewer'] = wpst_sanitize_viewer( $_POST['wpst_show_viewer'] );
+	$post_data['post_content']     = ''; // No post content but can't be NULL.
 	unset( $sanitized_values['submitted_post_title'] );
 
 	// Create the new post.
