@@ -31,6 +31,7 @@ class WPST_Helpers {
 	 * @since  NEXT
 	 */
 	public function hooks() {
+		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
 	}
 
 	/**
