@@ -78,8 +78,11 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 		$name = get_user_meta( $user_id, 'display_name' );
 		$name = $name ? ' '. $name : '';
 
+		$terms = wp_get_object_terms( $post->ID, 'wpst_viewer' );
+		$viewer = $terms[0]->name;
+
 		// Add notice of submission to our output.
-		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%s, your show has been entered.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>' );
+		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%1$s, %2$s has been entered for %3$s.', 'wds-post-submit' ), esc_html( $name ), '<span class="show-title" id="' . $post->post_name . '-' . $post->ID . '"><em>' . $post->post_title . '</em></span>', $viewer ) . '</h3>' );
 	}
 
 	$output .= apply_filters( 'wpst_before_show_form', '' );
