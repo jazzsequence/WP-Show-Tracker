@@ -79,7 +79,7 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 		$name = $name ? ' '. $name : '';
 
 		// Add notice of submission to our output.
-		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>' );
+		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%s, your show has been entered.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>' );
 	}
 
 	$output .= apply_filters( 'wpst_before_show_form', '' );
