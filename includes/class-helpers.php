@@ -131,6 +131,33 @@ class WPST_Helpers {
 		return $output;
 	}
 
+	/**
+	 * Checks if the passed viewer has watched the maximum number of shows this week.
+	 * @param  string $viewer The viewer term slug.
+	 * @return bool           True/false whether the current number of shows is equal to or greater than the max shows.
+	 */
+	public function watched_max_shows( $viewer ) {
+		return $this->get_show_count_this_week_for( $viewer ) >= $this->get_max_shows_for_viewer( $viewer );
+	}
+
+	/**
+	 * Returns an array of viewers to hide because they have reached their maximum number of shows.
+	 * @return mixed Array of viewers who have watched their max shows or false if none have reached max shows.
+	 */
+	public function hide_viewers() {
+		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+		$count = count( $viewers );
+
+		$hide_for = false;
+		foreach ( $viewers as $viewer ) {
+			if ( $this->watched_max_shows( $viewer->slug ) ) {
+				$hide_for[] = $viewer->slug;
+			}
+		}
+
+		return $hide_for;
+	}
+
 	public function maybe_hide_form( $cmb2_form ) {
 
 	}
