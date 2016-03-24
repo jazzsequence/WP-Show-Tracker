@@ -31,6 +31,7 @@ class WPST_Helpers {
 	 * @since  NEXT
 	 */
 	public function hooks() {
+		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
 	}
 
 	/**
@@ -39,7 +40,7 @@ class WPST_Helpers {
 	 * @return int            The number of shows for that viewer. Default is 0.
 	 */
 	public function get_max_shows_for_viewer( $viewer ) {
-		return ( wp_show_tracker()->options->get_option( $viewer . '-max-shows' ) ) ? absint( wp_show_tracker()->options->get_option( $viewer . '-max-shows' ) ) : 0;
+		return ( wpst()->options->get_option( $viewer . '-max-shows' ) ) ? absint( wpst()->options->get_option( $viewer . '-max-shows' ) ) : 0;
 	}
 
 	/**
@@ -47,7 +48,7 @@ class WPST_Helpers {
 	 * @return string The start day of the week.
 	 */
 	public function get_start_day() {
-		return ( wp_show_tracker()->options->get_option( 'wpst_start_day' ) ) ? esc_attr( wp_show_tracker()->options->get_option( 'wpst_start_day' ) ) : 'sunday';
+		return ( wpst()->options->get_option( 'wpst_start_day' ) ) ? esc_attr( wpst()->options->get_option( 'wpst_start_day' ) ) : 'sunday';
 	}
 
 	/**
@@ -73,7 +74,7 @@ class WPST_Helpers {
 		// Loop through this week's shows and tally up the total count.
 		$count = 0;
 		foreach ( $shows as $show ) {
-			if ( $show_count = get_post_meta( $show['ID'], 'wpst_show_count', true ) ) {
+			if ( $show_count = get_post_meta( $show->ID, 'wpst_show_count', true ) ) {
 				$count = $count + absint( $show_count );
 			}
 		}
@@ -109,8 +110,28 @@ class WPST_Helpers {
 		}
 
 		// If a viewer was passed but it wasn't valid, bail.
-		if ( ! wp_show_tracker()->helpers->viewer_exists( $viewer ) ) {
+		if ( ! wpst()->helpers->viewer_exists( $viewer ) ) {
 			wp_die( esc_attr__( 'A viewer was passed to <code>wpst_get_max_shows_for</code> but that viewer did not exist or was not recognized as a valid viewer.', 'wp-show-tracker' ), esc_attr__( 'Error in wpst_get_max_shows_for', 'wp-show-tracker' ) );
 		}
+	}
+
+	/**
+	 * Display a show count for each viewer above the show submission form.
+	 * @return string A show count for each viewer or an empty string if max is unlimited.
+	 */
+	public function display_show_count_for_viewers() {
+		$output = '';
+		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+		foreach ( $viewers as $viewer ) {
+			if ( $this->get_max_shows_for_viewer( $viewer->slug ) >= 1 ) {
+				$output .= sprintf( '<div class="alert warn"><p>' . __( '%1$d of %2$d shows watched for %3$s.', 'wp-show-tracker' ) . '</p></div>', $this->get_show_count_this_week_for( $viewer->slug ), $this->get_max_shows_for_viewer( $viewer->slug ), $viewer->name );
+			}
+		}
+
+		return $output;
+	}
+
+	public function maybe_hide_form( $cmb2_form ) {
+
 	}
 }

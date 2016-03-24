@@ -78,8 +78,11 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 		$name = get_user_meta( $user_id, 'display_name' );
 		$name = $name ? ' '. $name : '';
 
+		$terms = wp_get_object_terms( $post->ID, 'wpst_viewer' );
+		$viewer = $terms[0]->name;
+
 		// Add notice of submission to our output.
-		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>' );
+		$output .= apply_filters( 'wpst_successful_post_message', '<h3>' . sprintf( __( 'Thank you%1$s, %2$s has been entered for %3$s.', 'wds-post-submit' ), esc_html( $name ), '<span class="show-title" id="' . $post->post_name . '-' . $post->ID . '"><em>' . $post->post_title . '</em></span>', $viewer ) . '</h3>' );
 	}
 
 	$output .= apply_filters( 'wpst_before_show_form', '' );
@@ -90,6 +93,26 @@ function wpst_do_frontend_form_submission_shortcode( $atts = array() ) {
 	return $output;
 }
 add_shortcode( 'wp-show-tracker', 'wpst_do_frontend_form_submission_shortcode' );
+
+/**
+ * Sanitizes the viewer slug and makes sure the term exists.
+ * @param  string $viewer The slug for the viewer passed from the form.
+ * @return string         The sanitized viewer slug.
+ */
+function wpst_sanitize_viewer( $viewer = '' ) {
+	// If no viewer is passed, we have a problem.
+	if ( '' == $viewer ) {
+		return new WP_Error( 'post_data_missing', __( 'Show needs a viewer.', 'wp-show-tracker' ) );
+	}
+
+	$viewer = sanitize_title( $viewer );
+
+	if ( ! term_exists( $viewer, 'wpst_viewer' ) ) {
+		return new WP_Error( 'post_data_missing', __( 'Viewer does not exist.', 'wp-show-tracker' ) );
+	}
+
+	return $viewer;
+}
 
 /**
  * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
@@ -131,16 +154,21 @@ function wpst_handle_frontend_new_post_form_submission() {
 		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Please enter a new title.', 'wp-show-tracker' ) ) );
 	}
 
+	// Make sure we have a viewer set.
+	if ( $cmb->get_field( 'wpst_show_viewer' )->default() == $_POST['wpst_show_viewer'] ) {
+		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Show needs a viewer.', 'wp-show-tracker' ) ) );
+	}
+
 	/**
 	 * Fetch sanitized values
 	 */
-	$sanitized_values = $cmb->get_sanitized_values( $_POST );
+	$sanitized_values                     = $cmb->get_sanitized_values( $_POST );
 
 	// Set our post data arguments.
-	$post_data['post_title']   = $sanitized_values['submitted_post_title'];
+	$post_data['post_title']       = $sanitized_values['submitted_post_title'];
+	$post_data['wpst_show_viewer'] = wpst_sanitize_viewer( $_POST['wpst_show_viewer'] );
+	$post_data['post_content']     = ''; // No post content but can't be NULL.
 	unset( $sanitized_values['submitted_post_title'] );
-	$post_data['post_content'] = $sanitized_values['submitted_post_content'];
-	unset( $sanitized_values['submitted_post_content'] );
 
 	// Create the new post.
 	$new_submission_id = wp_insert_post( $post_data, true );
@@ -167,6 +195,9 @@ function wpst_handle_frontend_new_post_form_submission() {
 		} else {
 			update_post_meta( $new_submission_id, $key, $value );
 		}
+
+		// Add the viewer to the show.
+		wp_set_object_terms( $new_submission_id, $post_data['wpst_show_viewer'], 'wpst_viewer' );
 	}
 
 	/*
