@@ -32,6 +32,21 @@ class WPST_Helpers {
 	 */
 	public function hooks() {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+	}
+
+	/**
+	 * Enqueue those scripts!
+	 * @since NEXT
+	 */
+	public function enqueue_scripts() {
+		if ( ! is_admin() ) {
+			wp_enqueue_script( 'wp-show-tracker', wpst()->url . '/assets/js/maxshows.js', array( 'jquery' ), wpst()->version, true );
+			wp_localize_script( 'wp-show-tracker', 'maxshows', array(
+				'hidden_viewers' => $this->hide_viewers(),
+				// 'hide_submit'    =>
+			) );
+		}
 	}
 
 	/**
