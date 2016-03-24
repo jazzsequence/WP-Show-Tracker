@@ -131,6 +131,14 @@ class WPST_Helpers {
 		return $output;
 	}
 
+	/**
+	 * Checks if the passed viewer has watched the maximum number of shows this week.
+	 * @param  string $viewer The viewer term slug.
+	 * @return bool           True/false whether the current number of shows is equal to or greater than the max shows.
+	 */
+	public function watched_max_shows( $viewer ) {
+		return $this->get_show_count_this_week_for( $viewer ) >= $this->get_max_shows_for_viewer( $viewer );
+	}
 	public function maybe_hide_form( $cmb2_form ) {
 
 	}
