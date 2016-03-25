@@ -138,7 +138,7 @@ class WPST_Helpers {
 		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 		foreach ( $viewers as $viewer ) {
 			if ( $this->get_max_shows_for_viewer( $viewer->slug ) >= 1 ) {
-				$output .= sprintf( '<div class="alert warn"><p>' . __( '%1$d of %2$d shows watched for %3$s.', 'wp-show-tracker' ) . '</p></div>', $this->get_show_count_this_week_for( $viewer->slug ), $this->get_max_shows_for_viewer( $viewer->slug ), $viewer->name );
+				$output .= sprintf( '<div class="alert warn"><p>' . __( '%3$s has watched %1$d of %2$d shows this week. %4$d shows remain.', 'wp-show-tracker' ) . '</p></div>', $this->get_show_count_this_week_for( $viewer->slug ), $this->get_max_shows_for_viewer( $viewer->slug ), $viewer->name, $this->get_remaining_shows_for( $viewer->slug ) );
 			}
 		}
 
