@@ -146,6 +146,17 @@ class WPST_Helpers {
 	}
 
 	/**
+	 * Return the remaining shows for the passed viewer.
+	 * @param  string $viewer The viewer term slug.
+	 * @return int            The number of shows remaining for that user.
+	 */
+	public function get_remaining_shows_for( $viewer ) {
+		$show_count = $this->get_show_count_this_week_for( $viewer );
+		$max_shows  = $this->get_max_shows_for_viewer( $viewer );
+		return absint( $max_shows ) - absint( $show_count );
+	}
+
+	/**
 	 * Checks if the passed viewer has watched the maximum number of shows this week.
 	 * @param  string $viewer The viewer term slug.
 	 * @return bool           True/false whether the current number of shows is equal to or greater than the max shows.
