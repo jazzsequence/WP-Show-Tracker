@@ -32,6 +32,21 @@ class WPST_Helpers {
 	 */
 	public function hooks() {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
+		add_filter( 'wpst_cmb2_post_form', array( $this, 'maybe_hide_form' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+	}
+
+	/**
+	 * Enqueue those scripts!
+	 * @since NEXT
+	 */
+	public function enqueue_scripts() {
+		if ( ! is_admin() ) {
+			wp_enqueue_script( 'wp-show-tracker', wpst()->url . '/assets/js/maxshows.js', array( 'jquery' ), wpst()->version, false );
+			wp_localize_script( 'wp-show-tracker', 'maxshows', array(
+				'hidden_viewers' => $this->hide_viewers(),
+			) );
+		}
 	}
 
 	/**
@@ -124,11 +139,22 @@ class WPST_Helpers {
 		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 		foreach ( $viewers as $viewer ) {
 			if ( $this->get_max_shows_for_viewer( $viewer->slug ) >= 1 ) {
-				$output .= sprintf( '<div class="alert warn"><p>' . __( '%1$d of %2$d shows watched for %3$s.', 'wp-show-tracker' ) . '</p></div>', $this->get_show_count_this_week_for( $viewer->slug ), $this->get_max_shows_for_viewer( $viewer->slug ), $viewer->name );
+				$output .= sprintf( '<div class="alert warn"><p>' . __( '%3$s has watched %1$d of %2$d shows this week. %4$d shows remain.', 'wp-show-tracker' ) . '</p></div>', $this->get_show_count_this_week_for( $viewer->slug ), $this->get_max_shows_for_viewer( $viewer->slug ), $viewer->name, $this->get_remaining_shows_for( $viewer->slug ) );
 			}
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Return the remaining shows for the passed viewer.
+	 * @param  string $viewer The viewer term slug.
+	 * @return int            The number of shows remaining for that user.
+	 */
+	public function get_remaining_shows_for( $viewer ) {
+		$show_count = $this->get_show_count_this_week_for( $viewer );
+		$max_shows  = $this->get_max_shows_for_viewer( $viewer );
+		return absint( $max_shows ) - absint( $show_count );
 	}
 
 	/**
@@ -158,7 +184,32 @@ class WPST_Helpers {
 		return $hide_for;
 	}
 
-	public function maybe_hide_form( $cmb2_form ) {
+	/**
+	 * Determines if all shows have been watched by all viewers.
+	 * @return bool Returns true if all viewers have reached their maximum shows.
+	 */
+	public function all_shows_watched() {
+		$all_viewer_count   = count( get_terms( 'wpst_viewer', array( 'hide_empty' => false ) ) );
+		$maxed_show_viewers = 0;
+		foreach ( $this->hide_viewers() as $viewer => $hidden ) {
+			if ( $hidden ) {
+				$maxed_show_viewers++;
+			}
+		}
 
+		return ( $maxed_show_viewers >= $all_viewer_count ) ? true : false;
+	}
+
+	/**
+	 * Replaces the CMB2 form with a notice if all shows have been watched by all viewers.
+	 * @param  string $cmb2_form The CMB2 form that we're filtering (replacing).
+	 * @return string            The original CMB2 form or a message stating that all shows have been watched.
+	 */
+	public function maybe_hide_form( $cmb2_form ) {
+		if ( $this->all_shows_watched() ) {
+			$cmb2_form = '<div class="all-shows-watched"><p>' . __( 'All shows have been watched for this week by all viewers.', 'wp-show-tracker' ) . '</p></div>';
+		}
+
+		return $cmb2_form;
 	}
 }
