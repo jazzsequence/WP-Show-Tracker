@@ -32,6 +32,7 @@ class WPST_Helpers {
 	 */
 	public function hooks() {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
+		add_filter( 'wpst_cmb2_post_form', array( $this, 'maybe_hide_form' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
@@ -199,7 +200,16 @@ class WPST_Helpers {
 		return ( $maxed_show_viewers >= $all_viewer_count ) ? true : false;
 	}
 
+	/**
+	 * Replaces the CMB2 form with a notice if all shows have been watched by all viewers.
+	 * @param  string $cmb2_form The CMB2 form that we're filtering (replacing).
+	 * @return string            The original CMB2 form or a message stating that all shows have been watched.
+	 */
 	public function maybe_hide_form( $cmb2_form ) {
+		if ( $this->all_shows_watched() ) {
+			$cmb2_form = '<div class="all-shows-watched"><p>' . __( 'All shows have been watched for this week by all viewers.', 'wp-show-tracker' ) . '</p></div>';
+		}
 
+		return $cmb2_form;
 	}
 }
