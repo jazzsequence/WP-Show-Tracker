@@ -183,6 +183,22 @@ class WPST_Helpers {
 		return $hide_for;
 	}
 
+	/**
+	 * Determines if all shows have been watched by all viewers.
+	 * @return bool Returns true if all viewers have reached their maximum shows.
+	 */
+	public function all_shows_watched() {
+		$all_viewer_count   = count( get_terms( 'wpst_viewer', array( 'hide_empty' => false ) ) );
+		$maxed_show_viewers = 0;
+		foreach ( $this->hide_viewers() as $viewer => $hidden ) {
+			if ( $hidden ) {
+				$maxed_show_viewers++;
+			}
+		}
+
+		return ( $maxed_show_viewers >= $all_viewer_count ) ? true : false;
+	}
+
 	public function maybe_hide_form( $cmb2_form ) {
 
 	}
