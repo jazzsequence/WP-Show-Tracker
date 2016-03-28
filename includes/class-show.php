@@ -122,7 +122,7 @@ class WPST_Show extends CPT_Core {
 			'title'                => __( 'Show Title', 'wp-show-tracker' ),
 			'date_watched'         => __( 'Date Watched', 'wp-show-tracker' ),
 			'taxonomy-wpst_viewer' => __( 'Viewer', 'wp-show-tracker' ),
-			'date'                 => __( 'Date entered', 'wp-show-tracker' ),
+			'date'                 => __( 'Published', 'wp-show-tracker' ),
 		);
 		return $new_columns;
 	}
