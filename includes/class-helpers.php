@@ -86,7 +86,7 @@ class WPST_Helpers {
 			'meta_query'  => array(
 				array(
 					'key'     => 'wpst_show_date',
-					'value'   => array( strtotime( sprintf( 'last %s', $this->get_start_day() ) ), strtotime( 'today' ) ),
+					'value'   => array( $start, $end ),
 					'compare' => 'BETWEEN',
 				),
 			),
