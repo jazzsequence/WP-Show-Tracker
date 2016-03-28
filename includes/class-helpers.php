@@ -191,9 +191,13 @@ class WPST_Helpers {
 	public function all_shows_watched() {
 		$all_viewer_count   = count( get_terms( 'wpst_viewer', array( 'hide_empty' => false ) ) );
 		$maxed_show_viewers = 0;
-		foreach ( $this->hide_viewers() as $viewer => $hidden ) {
-			if ( $hidden ) {
-				$maxed_show_viewers++;
+		$hidden_viewers = $this->hide_viewers();
+
+		if ( $hidden_viewers ) {
+			foreach ( $hidden_viewers as $viewer => $hidden ) {
+				if ( $hidden ) {
+					$maxed_show_viewers++;
+				}
 			}
 		}
 
