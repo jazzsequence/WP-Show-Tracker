@@ -34,8 +34,8 @@ class WPST_Helpers {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
 		add_filter( 'wpst_cmb2_post_form', array( $this, 'maybe_hide_form' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'wp_ajax_wpst_suggest', array( $this, 'autosuggest' ) );
-		add_action( 'wp_ajax_nopriv_wpst_suggest', array( $this, 'autosuggest' ) );
+		add_action( 'wp_ajax_autosuggest', array( $this, 'autosuggest' ) );
+		add_action( 'wp_ajax_nopriv_autosuggest', array( $this, 'autosuggest' ) );
 	}
 
 	/**

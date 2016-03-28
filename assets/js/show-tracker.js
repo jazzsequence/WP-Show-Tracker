@@ -7,5 +7,5 @@ jQuery(document).ready(function($) {
 
 	$('input#submitted_post_title').suggest(showtracker.admin_ajax + '?action=wpst_suggest');
 	console.log(showtracker.admin_ajax);
-	console.log($('input#submitted_post_title').suggest(showtracker.admin_ajax + '?action=wpst_suggest'));
+	console.log($('input#submitted_post_title').suggest(showtracker.admin_ajax + '?action=autosuggest'));
 });
