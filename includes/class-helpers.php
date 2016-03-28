@@ -75,8 +75,8 @@ class WPST_Helpers {
 
 		// Check if today is the start day. If it is, we need to adjust our start/end times.
 		$start_day = $this->get_start_day();
-		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? 'today' : sprintf( 'last %s', $start_day );
-		$end       = ( 'today' == $start_day ) ? sprintf( 'next %s', $start_day ) : 'today';
+		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : strtotime( sprintf( 'last %s', $start_day ) );
+		$end       = ( 'today' == $start_day ) ? strtotime( sprintf( 'next %s', $start_day ) ) : strtotime( 'today' );
 
 		// Get the shows for this week.
 		$shows = get_posts( array(
