@@ -34,6 +34,8 @@ class WPST_Helpers {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
 		add_filter( 'wpst_cmb2_post_form', array( $this, 'maybe_hide_form' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_ajax_wpst_suggest', array( $this, 'autosuggest' ) );
+		add_action( 'wp_ajax_nopriv_wpst_suggest', array( $this, 'autosuggest' ) );
 	}
 
 	/**
@@ -48,6 +50,20 @@ class WPST_Helpers {
 				'admin_ajax'     => admin_url( 'admin-ajax.php' ),
 			) );
 		}
+	}
+
+	public function autosuggest() {
+		global $wpdb;
+
+		$search = like_escape( $_REQUEST['q'] );
+
+		$query = 'SELECT ID,post_title FROM ' . $wpdb->posts . ' WHERE post_title LIKE \'' . $search . '%\' AND post_type = \'wpst_show\' AND post_status = \'publish\' ORDER BY post_title ASC';
+var_dump($wpdb->get_results($query));
+		foreach ( $wpdb->get_results( $query ) as $row ) {
+			echo $row->post_title;
+		}
+
+		// die();
 	}
 
 	/**
