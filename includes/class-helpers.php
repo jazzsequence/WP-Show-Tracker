@@ -72,6 +72,12 @@ class WPST_Helpers {
 	 * @return int            The total number of shows watched by this viewer this week.
 	 */
 	public function get_show_count_this_week_for( $viewer ) {
+
+		// Check if today is the start day. If it is, we need to adjust our start/end times.
+		$start_day = $this->get_start_day();
+		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? 'today' : sprintf( 'last %s', $start_day );
+		$end       = ( 'today' == $start_day ) ? sprintf( 'next %s', $start_day ) : 'today';
+
 		// Get the shows for this week.
 		$shows = get_posts( array(
 			'post_type'   => 'wpst_show',
