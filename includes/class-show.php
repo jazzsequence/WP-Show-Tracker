@@ -118,10 +118,13 @@ class WPST_Show extends CPT_Core {
 	 * @return array          Modified array
 	 */
 	public function columns( $columns ) {
-		$new_column = array(
-			'date_watched' => __( 'Date Watched', 'wp-show-tracker' ),
+		$new_columns = array(
+			'title'                => __( 'Show Title', 'wp-show-tracker' ),
+			'date_watched'         => __( 'Date Watched', 'wp-show-tracker' ),
+			'taxonomy-wpst_viewer' => __( 'Viewer', 'wp-show-tracker' ),
+			'date'                 => __( 'Date entered', 'wp-show-tracker' ),
 		);
-		return array_merge( $new_column, $columns );
+		return $new_columns;
 	}
 
 	/**
