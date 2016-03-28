@@ -47,6 +47,7 @@ class WPST_Helpers {
 			wp_enqueue_script( 'wp-show-tracker', wpst()->url . '/assets/js/show-tracker.js', array( 'jquery', 'suggest' ), wpst()->version, false );
 			wp_localize_script( 'wp-show-tracker', 'showtracker', array(
 				'hidden_viewers' => $this->hide_viewers(),
+				'admin_ajax'     => admin_url( 'admin-ajax.php' ),
 			) );
 		}
 	}
