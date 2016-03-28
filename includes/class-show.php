@@ -118,7 +118,9 @@ class WPST_Show extends CPT_Core {
 	 * @return array          Modified array
 	 */
 	public function columns( $columns ) {
-		$new_column = array();
+		$new_column = array(
+			'date_watched' => __( 'Date Watched', 'wp-show-tracker' ),
+		);
 		return array_merge( $new_column, $columns );
 	}
 
@@ -131,6 +133,10 @@ class WPST_Show extends CPT_Core {
 	 */
 	public function columns_display( $column, $post_id ) {
 		switch ( $column ) {
+			case 'date_watched' :
+				$date = get_post_meta( $post_id, 'wpst_show_date', true );
+				echo esc_attr( date( get_option( 'date_format' ), $date ) );
+				break;
 		}
 	}
 
