@@ -40,8 +40,10 @@ class WPST_Show extends CPT_Core {
 		parent::__construct(
 			array( __( 'Show', 'wp-show-tracker' ), __( 'Shows', 'wp-show-tracker' ), 'wpst_show' ),
 			array(
-				'supports'  => array( 'title' ),
-				'menu_icon' => 'dashicons-editor-video',
+				'supports'     => array( 'title' ),
+				'menu_icon'    => 'dashicons-editor-video',
+				'show_in_rest' => true,
+				'rest_base'    => 'shows',
 			)
 		);
 	}
