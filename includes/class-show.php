@@ -118,8 +118,13 @@ class WPST_Show extends CPT_Core {
 	 * @return array          Modified array
 	 */
 	public function columns( $columns ) {
-		$new_column = array();
-		return array_merge( $new_column, $columns );
+		$new_columns = array(
+			'title'                => __( 'Show Title', 'wp-show-tracker' ),
+			'date_watched'         => __( 'Date Watched', 'wp-show-tracker' ),
+			'taxonomy-wpst_viewer' => __( 'Viewer', 'wp-show-tracker' ),
+			'date'                 => __( 'Published', 'wp-show-tracker' ),
+		);
+		return $new_columns;
 	}
 
 	/**
@@ -131,6 +136,10 @@ class WPST_Show extends CPT_Core {
 	 */
 	public function columns_display( $column, $post_id ) {
 		switch ( $column ) {
+			case 'date_watched' :
+				$date = get_post_meta( $post_id, 'wpst_show_date', true );
+				echo esc_attr( date( get_option( 'date_format' ), $date ) );
+				break;
 		}
 	}
 
