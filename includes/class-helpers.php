@@ -60,7 +60,7 @@ class WPST_Helpers {
 		$query = 'SELECT ID,post_title FROM ' . $wpdb->posts . ' WHERE post_title LIKE \'' . $search . '%\' AND post_type = \'wpst_show\' AND post_status = \'publish\' ORDER BY post_title ASC';
 var_dump($wpdb->get_results($query));
 		foreach ( $wpdb->get_results( $query ) as $row ) {
-			echo $row->post_title;
+			echo $row->post_title . '\n';
 		}
 
 		// die();
