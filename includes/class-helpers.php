@@ -41,12 +41,19 @@ class WPST_Helpers {
 	 * @since NEXT
 	 */
 	public function enqueue_scripts() {
+		$min = '.min';
+
+		// Don't use minified js/css if DEBUG is on.
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$min = '';
+		}
+
 		if ( ! is_admin() ) {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'jquery-ui' );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
-			wp_enqueue_script( 'show-tracker', wpst()->url . 'assets/js/show-tracker.js', array(), wpst()->version, true );
-			wp_enqueue_style( 'show-tracker', wpst()->url . 'assets/css/show-tracker.css', array(), wpst()->version, 'screen' );
+			wp_enqueue_script( 'show-tracker', wpst()->url . 'assets/js/show-tracker' . $min . '.js', array(), wpst()->version, true );
+			wp_enqueue_style( 'show-tracker', wpst()->url . 'assets/css/show-tracker' . $min . '.css', array(), wpst()->version, 'screen' );
 			wp_localize_script( 'show-tracker', 'showtracker', array(
 				'hidden_viewers' => $this->hide_viewers(),
 				'autosuggest'    => $this->autosuggest_terms(),
