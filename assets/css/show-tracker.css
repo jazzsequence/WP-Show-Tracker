@@ -6,3 +6,7 @@ ul.ui-autocomplete {
 	list-style-type: none;
 	cursor: pointer;
 }
+
+div#cmb2-metabox-wpst_show_metabox ul.cmb2-radio-list {
+	list-style-type: none;
+}
