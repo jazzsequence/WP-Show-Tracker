@@ -55,6 +55,7 @@ class WPST_Helpers {
 			wp_localize_script( 'show-tracker', 'showtracker', array(
 				'hidden_viewers' => $this->hide_viewers(),
 				'autosuggest'    => $this->autosuggest_terms(),
+				'wp_debug'       => ( defined( 'WP_DEBUG' ) && WP_DEBUG ),
 			) );
 		}
 	}
