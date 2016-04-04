@@ -5,7 +5,10 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	$('input#submitted_post_title').suggest(showtracker.admin_ajax + '?action=wpst_suggest');
-	console.log(showtracker.admin_ajax);
-	console.log($('input#submitted_post_title').suggest(showtracker.admin_ajax + '?action=autosuggest'));
+	if ( showtracker.autosuggest ) {
+		var post_title = $('input#submitted_post_title');
+		post_title.autocomplete({
+			source: showtracker.autosuggest,
+		});
+	}
 });
