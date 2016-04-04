@@ -10,14 +10,14 @@ class WPST_Helpers {
 	 * Parent plugin class
 	 *
 	 * @var   class
-	 * @since NEXT
+	 * @since 0.1.0
 	 */
 	protected $plugin = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @since  NEXT
+	 * @since  0.1.0
 	 * @param  object $plugin Main plugin object.
 	 */
 	public function __construct( $plugin ) {
@@ -28,7 +28,7 @@ class WPST_Helpers {
 	/**
 	 * Initiate our hooks
 	 *
-	 * @since  NEXT
+	 * @since  0.1.0
 	 */
 	public function hooks() {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
@@ -38,7 +38,7 @@ class WPST_Helpers {
 
 	/**
 	 * Enqueue those scripts!
-	 * @since NEXT
+	 * @since 0.2.0
 	 */
 	public function enqueue_scripts() {
 		$min = '.min';
@@ -62,6 +62,7 @@ class WPST_Helpers {
 
 	/**
 	 * Returns an array of unique show names.
+	 * @since  0.3.0
 	 * @return array Unique show names for all shows fetched from the WP-API.
 	 */
 	public function autosuggest_terms() {
@@ -93,6 +94,7 @@ class WPST_Helpers {
 
 	/**
 	 * Get the start day for the week. Defaults to Sunday.
+	 * @since  0.2.0
 	 * @return string The start day of the week.
 	 */
 	public function get_start_day() {
@@ -101,6 +103,7 @@ class WPST_Helpers {
 
 	/**
 	 * Returns the show count for the current week for the given viewer.
+	 * @since  0.2.0
 	 * @param  string $viewer The wpst_viewer term slug.
 	 * @return int            The total number of shows watched by this viewer this week.
 	 */
@@ -138,6 +141,7 @@ class WPST_Helpers {
 
 	/**
 	 * Checks if the viewer term exists.
+	 * @since  0.2.0
 	 * @uses   get_term_by    This check uses get_term_by which isn't recommended for resource reasons. As such, internally we never perform this check but it's used in all the template tags to determine if the viewer is a valid viewer.
 	 * @param  string $viewer A wpst_viewer term slug.
 	 * @return bool           Whether the viewer term exists.
@@ -154,6 +158,7 @@ class WPST_Helpers {
 
 	/**
 	 * Checks to make sure a value was passed and that the viewer exists. If either fail, returns a wp_die message.
+	 * @since  0.2.0
 	 * @uses   viewer_exists  Relies on the internal method viewer_exists which uses get_term_by to determine if the viewer is a valid taxonomy term.
 	 * @param  string $viewer A wpst_viewer term slug.
 	 */
@@ -171,6 +176,7 @@ class WPST_Helpers {
 
 	/**
 	 * Display a show count for each viewer above the show submission form.
+	 * @since  0.2.0
 	 * @return string A show count for each viewer or an empty string if max is unlimited.
 	 */
 	public function display_show_count_for_viewers() {
@@ -187,6 +193,7 @@ class WPST_Helpers {
 
 	/**
 	 * Return the remaining shows for the passed viewer.
+	 * @since  0.2.0
 	 * @param  string $viewer The viewer term slug.
 	 * @return int            The number of shows remaining for that user.
 	 */
@@ -198,6 +205,7 @@ class WPST_Helpers {
 
 	/**
 	 * Checks if the passed viewer has watched the maximum number of shows this week.
+	 * @since  0.2.0
 	 * @param  string $viewer The viewer term slug.
 	 * @return bool           True/false whether the current number of shows is equal to or greater than the max shows.
 	 */
@@ -207,6 +215,7 @@ class WPST_Helpers {
 
 	/**
 	 * Returns an array of viewers to hide because they have reached their maximum number of shows.
+	 * @since  0.2.0
 	 * @return mixed Array of viewers who have watched their max shows or false if none have reached max shows.
 	 */
 	public function hide_viewers() {
@@ -225,6 +234,7 @@ class WPST_Helpers {
 
 	/**
 	 * Determines if all shows have been watched by all viewers.
+	 * @since  0.2.0
 	 * @return bool Returns true if all viewers have reached their maximum shows.
 	 */
 	public function all_shows_watched() {
@@ -245,6 +255,7 @@ class WPST_Helpers {
 
 	/**
 	 * Replaces the CMB2 form with a notice if all shows have been watched by all viewers.
+	 * @since  0.2.0
 	 * @param  string $cmb2_form The CMB2 form that we're filtering (replacing).
 	 * @return string            The original CMB2 form or a message stating that all shows have been watched.
 	 */
