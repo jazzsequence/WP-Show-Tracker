@@ -1,0 +1,7 @@
+ul.ui-autocomplete {
+	background: white;
+	border: 1px solid #ddd;
+	padding: 5px;
+	width: 300px!important;
+	list-style-type: none;
+}
