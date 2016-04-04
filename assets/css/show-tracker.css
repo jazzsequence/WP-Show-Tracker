@@ -1,0 +1,12 @@
+ul.ui-autocomplete {
+	background: white;
+	border: 1px solid #ddd;
+	padding: 5px;
+	width: 300px!important;
+	list-style-type: none;
+	cursor: pointer;
+}
+
+div#cmb2-metabox-wpst_show_metabox ul.cmb2-radio-list {
+	list-style-type: none;
+}

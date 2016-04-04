@@ -41,12 +41,42 @@ class WPST_Helpers {
 	 * @since NEXT
 	 */
 	public function enqueue_scripts() {
+		$min = '.min';
+
+		// Don't use minified js/css if DEBUG is on.
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$min = '';
+		}
+
 		if ( ! is_admin() ) {
-			wp_enqueue_script( 'wp-show-tracker', wpst()->url . '/assets/js/maxshows.js', array( 'jquery' ), wpst()->version, false );
-			wp_localize_script( 'wp-show-tracker', 'maxshows', array(
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'jquery-ui' );
+			wp_enqueue_script( 'jquery-ui-autocomplete' );
+			wp_enqueue_script( 'show-tracker', wpst()->url . 'assets/js/show-tracker' . $min . '.js', array(), wpst()->version, true );
+			wp_enqueue_style( 'show-tracker', wpst()->url . 'assets/css/show-tracker' . $min . '.css', array(), wpst()->version, 'screen' );
+			wp_localize_script( 'show-tracker', 'showtracker', array(
 				'hidden_viewers' => $this->hide_viewers(),
+				'autosuggest'    => $this->autosuggest_terms(),
 			) );
 		}
+	}
+
+	public function autosuggest_terms() {
+		// Get the shows from WP-API.
+		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows' ) );
+
+		// Decode the json.
+		$posts = json_decode( $request['body'] );
+
+		// Build an array of show titles.
+		foreach ( $posts as $show ) {
+			$shows[] = $show->title->rendered;
+		}
+
+		// Strip out the duplicate titles.
+		$shows = array_unique( $shows );
+
+		return $shows;
 	}
 
 	/**
