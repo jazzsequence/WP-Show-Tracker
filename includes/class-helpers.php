@@ -34,8 +34,6 @@ class WPST_Helpers {
 		add_filter( 'wpst_before_show_form', array( $this, 'display_show_count_for_viewers' ) );
 		add_filter( 'wpst_cmb2_post_form', array( $this, 'maybe_hide_form' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'wp_ajax_autosuggest', array( $this, 'autosuggest' ) );
-		add_action( 'wp_ajax_nopriv_autosuggest', array( $this, 'autosuggest' ) );
 	}
 
 	/**
@@ -44,10 +42,12 @@ class WPST_Helpers {
 	 */
 	public function enqueue_scripts() {
 		if ( ! is_admin() ) {
-			wp_enqueue_script( 'wp-show-tracker', wpst()->url . '/assets/js/show-tracker.js', array( 'jquery', 'suggest' ), wpst()->version, false );
-			wp_localize_script( 'wp-show-tracker', 'showtracker', array(
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'jquery-ui' );
+			wp_enqueue_script( 'jquery-ui-autocomplete' );
+			wp_enqueue_script( 'show-tracker', wpst()->url . 'assets/js/show-tracker.js', array(), wpst()->version, true );
+			wp_localize_script( 'show-tracker', 'showtracker', array(
 				'hidden_viewers' => $this->hide_viewers(),
-				'admin_ajax'     => admin_url( 'admin-ajax.php' ),
 			) );
 		}
 	}
