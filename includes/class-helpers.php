@@ -49,8 +49,6 @@ class WPST_Helpers {
 		}
 
 		if ( ! is_admin() ) {
-			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script( 'jquery-ui' );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'show-tracker', wpst()->url . 'assets/js/show-tracker' . $min . '.js', array(), wpst()->version, true );
 			wp_enqueue_style( 'show-tracker', wpst()->url . 'assets/css/show-tracker' . $min . '.css', array(), wpst()->version, 'screen' );
