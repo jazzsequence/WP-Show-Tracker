@@ -7,6 +7,10 @@ jQuery(document).ready(function($) {
 
 	console.log( showtracker.autosuggest );
 	if ( showtracker.autosuggest ) {
+		showtracker.autosuggest = $.map( showtracker.autosuggest, function( value, index ){
+			return [value];
+		});
+		console.log( showtracker.autosuggest );
 		var post_title = $('input#submitted_post_title');
 		post_title.autocomplete({
 			source: showtracker.autosuggest,
