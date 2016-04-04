@@ -52,18 +52,22 @@ class WPST_Helpers {
 		}
 	}
 
-	public function autosuggest() {
-		global $wpdb;
+	public function autosuggest_terms() {
+		// Get the shows from WP-API.
+		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows' ) );
 
-		$search = like_escape( $_REQUEST['q'] );
+		// Decode the json.
+		$posts = json_decode( $request['body'] );
 
-		$query = 'SELECT ID,post_title FROM ' . $wpdb->posts . ' WHERE post_title LIKE \'' . $search . '%\' AND post_type = \'wpst_show\' AND post_status = \'publish\' ORDER BY post_title ASC';
-var_dump($wpdb->get_results($query));
-		foreach ( $wpdb->get_results( $query ) as $row ) {
-			echo $row->post_title . '\n';
+		// Build an array of show titles.
+		foreach ( $posts as $show ) {
+			$shows[] = $show->title->rendered;
 		}
 
-		// die();
+		// Strip out the duplicate titles.
+		$shows = array_unique( $shows );
+
+		return $shows;
 	}
 
 	/**
