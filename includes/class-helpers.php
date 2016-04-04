@@ -60,6 +60,10 @@ class WPST_Helpers {
 		}
 	}
 
+	/**
+	 * Returns an array of unique show names.
+	 * @return array Unique show names for all shows fetched from the WP-API.
+	 */
 	public function autosuggest_terms() {
 		// Get the shows from WP-API.
 		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows' ) );
