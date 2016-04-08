@@ -23,7 +23,15 @@ Track shows that you (or your kids) watch. Set a weekly limit and display an ale
 
 
 ## Screenshots ##
+![screenshot-1](https://www.evernote.com/shard/s19/sh/c7161f78-96d6-44c1-b574-c5e71ae6f52f/403d5e52f6f4c509/res/26b8b457-900c-4906-855f-52ab11fb04de/Show_Tracker.png)
 
+![autosuggest](https://www.evernote.com/shard/s19/sh/40ed7517-6317-4599-bde2-76e20a0c5423/67ab3d66aeabcc7e/res/4500b424-08ba-423d-b11e-0b5e01c90ce4/show-tracker-title.gif)
+
+![shows admin](https://www.evernote.com/l/ABPS4wftsA5BhZru9qqJ_Md-RgwmkPWxrWAB/image.png)
+
+![options page](https://www.evernote.com/l/ABPbIgidTaNA3boDDEEjCbdfM5uEbzPBlLwB/image.png)
+
+![viewers admin](https://www.evernote.com/l/ABN4INbSJD5Fl4UCKym5kGcJg7UiCKv2CDgB/image.png)
 
 ## Changelog ##
 
