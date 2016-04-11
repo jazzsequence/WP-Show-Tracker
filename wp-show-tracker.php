@@ -306,6 +306,11 @@ class WP_Show_Tracker {
 					'The following plugins need to be updated to their latest version to ensure maximum compatibility with WP Show Tracker: %1$s.',
 					'wp-show-tracker'
 				), // %1$s = plugin name(s).
+				'notice_can_activate_recommended' => _n_noop(
+					'The following recommended plugin is currently inactive: %1$s. This plugin is used for autocompletion support on show titles.',
+					'The following recommended plugins are currently inactive: %1$s.',
+					'wp-show-tracker'
+				), // %1$s = plugin name(s).
 				'activate_link'                   => _n_noop(
 					'Activate plugin',
 					'Activate plugins',
