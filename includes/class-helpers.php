@@ -67,7 +67,7 @@ class WPST_Helpers {
 	 */
 	public function autosuggest_terms() {
 		// Get the shows from WP-API.
-		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows' ) );
+		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows?filter[posts_per_page]=100' ) );
 
 		// Decode the json.
 		$posts = json_decode( $request['body'] );
