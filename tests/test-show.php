@@ -12,7 +12,7 @@ class WPST_Show_Test extends WP_UnitTestCase {
 	}
 
 	function test_class_access() {
-		$this->assertTrue( ()->show instanceof WPST_Show );
+		$this->assertTrue( wpst()->show instanceof WPST_Show );
 	}
 
   function test_cpt_exists() {

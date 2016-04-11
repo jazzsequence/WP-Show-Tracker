@@ -12,6 +12,6 @@ class WPST_Options_Test extends WP_UnitTestCase {
 	}
 
 	function test_class_access() {
-		$this->assertTrue( ()->options instanceof WPST_Options );
+		$this->assertTrue( wpst()->options instanceof WPST_Options );
 	}
 }

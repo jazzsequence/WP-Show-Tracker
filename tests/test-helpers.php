@@ -12,6 +12,6 @@ class WPST_Helpers_Test extends WP_UnitTestCase {
 	}
 
 	function test_class_access() {
-		$this->assertTrue( ()->helpers instanceof WPST_Helpers );
+		$this->assertTrue( wpst()->helpers instanceof WPST_Helpers );
 	}
 }

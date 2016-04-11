@@ -12,7 +12,7 @@ class WPST_Viewer_Test extends WP_UnitTestCase {
 	}
 
 	function test_class_access() {
-		$this->assertTrue( ()->viewer instanceof WPST_Viewer );
+		$this->assertTrue( wpst()->viewer instanceof WPST_Viewer );
 	}
 
   function test_taxonomy_exists() {
