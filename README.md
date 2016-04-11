@@ -1,5 +1,5 @@
 # WP Show Tracker #
-[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/jazzsequence/wp-show-tracker/develop/LICENSE.md) ![Travis CI](https://travis-ci.org/jazzsequence/WP-Show-Tracker.svg?branch=develop)
+[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/jazzsequence/WP-Show-Tracker/blob/develop/LICENSE.md) ![Travis CI](https://travis-ci.org/jazzsequence/WP-Show-Tracker.svg?branch=develop)
 
 **Contributors:**      Chris Reynolds  
 **Donate link:**       http://jazzsequence.com  
