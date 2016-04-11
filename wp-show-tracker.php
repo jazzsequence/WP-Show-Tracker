@@ -150,6 +150,7 @@ class WP_Show_Tracker {
 
 		// Include the template tags file.
 		require_once( $this->path . '/includes/template-tags.php' );
+		require_once( $this->path . '/vendor/TGM-Plugin-Activation/class-tgm-plugin-activation.php' );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
