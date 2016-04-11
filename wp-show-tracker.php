@@ -3,7 +3,7 @@
  * Plugin Name: WP Show Tracker
  * Plugin URI:  http://jazzsequence.com
  * Description: Track shows that you (or your kids) watch. Set a weekly limit and display an alert when the limit is reached for that viewer.
- * Version:     0.3.0
+ * Version:     0.4.0
  * Author:      Chris Reynolds
  * Author URI:  http://jazzsequence.com
  * Donate link: http://jazzsequence.com
@@ -164,6 +164,7 @@ class WP_Show_Tracker {
 		register_deactivation_hook( __FILE__, array( $this, '_deactivate' ) );
 
 		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'tgmpa_register', array( $this, 'register_required_plugins' ) );
 	}
 
 	/**
@@ -247,6 +248,75 @@ class WP_Show_Tracker {
 		echo '<div id="message" class="error">';
 		echo '<p>' . sprintf( __( 'WP Show Tracker is missing requirements and has been <a href="%s">deactivated</a>. Please make sure all requirements are available.', 'wp-show-tracker' ), admin_url( 'plugins.php' ) ) . '</p>';
 		echo '</div>';
+	}
+
+	/**
+	 * Register the required plugins for this theme.
+	 *
+	 * We're recommending (but not requiring) the WP-JSON API.
+	 *
+	 * This function is hooked into tgmpa_init, which is fired within the
+	 * TGM_Plugin_Activation class constructor.
+	 *
+	 * @since 0.4.0
+	 * @uses  tgmpa
+	 * @link  https://github.com/TGMPA/TGM-Plugin-Activation
+	 */
+	public function register_required_plugins() {
+		/*
+		 * Array of plugin arrays. Required keys are name and slug.
+		 * If the source is NOT from the .org repo, then source is also required.
+		 */
+		$plugins = array(
+			array(
+				'name'      => 'WordPress REST API',
+				'slug'      => 'rest-api',
+				'required'  => false,
+			),
+		);
+
+		/*
+		 * Array of configuration settings.
+		 */
+		$config = array(
+			'id'           => 'wp-show-tracker',       // Unique ID for hashing notices for multiple instances of TGMPA.
+			'default_path' => '',                      // Default absolute path to bundled plugins.
+			'menu'         => 'tgmpa-install-plugins', // Menu slug.
+			'parent_slug'  => 'plugins.php',           // Parent menu slug.
+			'capability'   => 'manage_options',        // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+			'has_notices'  => true,                    // Show admin notices or not.
+			'dismissable'  => true,                    // If false, a user cannot dismiss the nag message.
+			'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
+			'is_automatic' => true,                    // Automatically activate plugins after installation or not.
+			'message'      => '',                      // Message to output right before the plugins table.
+
+			'strings'      => array(
+				'notice_can_install_required'     => _n_noop(
+					'WP Show Tracker requires the following plugin: %1$s.',
+					'WP Show Tracker requires the following plugins: %1$s.',
+					'wp-show-tracker'
+				), // %1$s = plugin name(s).
+				'notice_can_install_recommended'  => _n_noop(
+					'WP Show Tracker recommends the following plugin: %1$s.',
+					'WP Show Tracker recommends the following plugins: %1$s.',
+					'wp-show-tracker'
+				), // %1$s = plugin name(s).
+				'notice_ask_to_update'            => _n_noop(
+					'The following plugin needs to be updated to its latest version to ensure maximum compatibility with WP Show Tracker: %1$s.',
+					'The following plugins need to be updated to their latest version to ensure maximum compatibility with WP Show Tracker: %1$s.',
+					'wp-show-tracker'
+				), // %1$s = plugin name(s).
+				'activate_link'                   => _n_noop(
+					'Activate plugin',
+					'Activate plugins',
+					'wp-show-tracker'
+				),
+				'plugin_needs_higher_version'     => __( 'Plugin not activated. A higher version of %s is needed for WP Show Tracker. Please update the plugin.', 'wp-show-tracker' ),  // %1$s = plugin name(s).
+				'nag_type'                        => 'updated', // Determines admin notice type - can only be 'updated', 'update-nag' or 'error'.
+			),
+		);
+
+		tgmpa( $plugins, $config );
 	}
 
 	/**
