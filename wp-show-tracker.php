@@ -297,7 +297,7 @@ class WP_Show_Tracker {
 					'wp-show-tracker'
 				), // %1$s = plugin name(s).
 				'notice_can_install_recommended'  => _n_noop(
-					'WP Show Tracker recommends the following plugin: %1$s.',
+					'WP Show Tracker recommends the %1$s plugin for autocompletion support for show titles.',
 					'WP Show Tracker recommends the following plugins: %1$s.',
 					'wp-show-tracker'
 				), // %1$s = plugin name(s).
