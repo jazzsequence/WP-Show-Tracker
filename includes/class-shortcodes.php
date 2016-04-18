@@ -46,6 +46,21 @@ class WPST_Shortcodes {
 			'viewer' => '',
 		), $atts );
 
+		// Get the viewer, make sure it's valid.
+		$viewer_slug = sanitize_title( $atts['viewer'] );
+		if ( 'all' !== $viewer_slug && $viewer = get_term_by( 'slug', $viewer_slug, 'wpst_viewer' ) ) {
+			$show_count_this_week_message = $this->get_show_count_this_week_for_viewer( $viewer, $viewer_slug );
+		} elseif ( 'all' == $viewer_slug ) {
+			$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+			foreach ( $viewers as $viewer ) {
+				$show_count_this_week_message .= $show_count_this_week_message = $this->get_show_count_this_week_for_viewer( $viewer, $viewer_slug );
+			}
+		} else {
+			$show_count_this_week_message = __( 'No valid viewer to display.', 'wp-show-tracker' );
+		}
+
+		$output = $show_count_this_week_message;
+
 		// Render the shortcode output.
 		ob_start();
 		echo $output; // WPCS: XSS ok. Everything is already sanitized.
