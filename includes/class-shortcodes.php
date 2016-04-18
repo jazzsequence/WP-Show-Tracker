@@ -75,9 +75,9 @@ class WPST_Shortcodes {
 	 * @return string         The output to display.
 	 */
 	private function get_show_count_this_week_for_viewer( $viewer, $slug ) {
-		$show_count_this_week = wpst()->helpers->get_show_count_this_week_for( $viewer_slug );
-		$output = '<div class="alert alert-info"><p><span class="show-count" id="show-count-for-' . $viewer_slug . '">';
-		$output .= '<label for="' . $viewer_slug . '">' . esc_attr( $viewer->name ) . ':</label>' . absint( $show_count_this_week );
+		$show_count_this_week = wpst()->helpers->get_show_count_this_week_for( $slug );
+		$output = '<div class="alert alert-info"><p><span class="show-count" id="show-count-for-' . $slug . '">';
+		$output .= '<label for="' . $slug . '">' . esc_attr( $viewer->name ) . ':</label> ' . absint( $show_count_this_week );
 		$output .= '</span></p></div>';
 
 		return $output;
