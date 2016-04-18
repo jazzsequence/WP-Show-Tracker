@@ -125,20 +125,30 @@ class WPST_Helpers {
 			'compare' => 'BETWEEN',
 		);
 
+		// Check for cached 'alltime' count.
+		$count = ( 'alltime' == $from ) ? get_transient( 'wpst_alltime_for_' . $viewer ) : 0;
 
-		// Get the shows for this week.
-		$shows = get_posts( array(
-			'post_type'   => 'wpst_show',
-			'nopaging'    => true,
-			'wpst_viewer' => $viewer,
-			'meta_query'  => array( $date_range ),
-		) );
+		// We don't have a count, calculate the total shows.
+		if ( ! $count ) {
 
-		// Loop through this week's shows and tally up the total count.
-		$count = 0;
-		foreach ( $shows as $show ) {
-			if ( $show_count = get_post_meta( $show->ID, 'wpst_show_count', true ) ) {
-				$count = $count + absint( $show_count );
+			// Get the shows.
+			$shows = get_posts( array(
+				'post_type'   => 'wpst_show',
+				'nopaging'    => true,
+				'wpst_viewer' => $viewer,
+				'meta_query'  => array( $date_range ),
+			) );
+
+			// Loop through shows and tally up the total count.
+			foreach ( $shows as $show ) {
+				if ( $show_count = get_post_meta( $show->ID, 'wpst_show_count', true ) ) {
+					$count = $count + absint( $show_count );
+				}
+			}
+
+			// Cache alltime counts so we don't need to calculate them every time.
+			if ( 'alltime' == $from && false === get_transient( 'wpst_alltime_for_' . $viewer ) ) {
+				set_transient( 'wpst_alltime_for_' . $viewer, $count, 24 * HOUR_IN_SECONDS );
 			}
 		}
 
