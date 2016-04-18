@@ -110,29 +110,28 @@ class WPST_Helpers {
 	 * Returns the show count for the given viewer. Default range is the last/current week.
 	 * @since  0.2.0
 	 * @param  string $viewer The wpst_viewer term slug.
-	 * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here.
+	 * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here. Passing 'alltime' will return total count.
 	 * @return int            The total number of shows watched by this viewer this week.
 	 */
 	public function get_show_count_for( $viewer, $from = 'week' ) {
 
 		// Check if today is the start day. If it is, we need to adjust our start/end times.
-		$start_day = ( '' == $from ) ? $this->get_start_day() : $from;
 		$start_day = ( 'week' == $from ) ? $this->get_start_day() : $from;
 		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : strtotime( sprintf( 'last %s', $start_day ) );
 		$end       = ( 'today' == $start_day ) ? strtotime( sprintf( 'next %s', $start_day ) ) : strtotime( 'today' );
+		$date_range = ( 'alltime' == $from ) ? array() : array(
+			'key'     => 'wpst_show_date',
+			'value'   => array( $start, $end ),
+			'compare' => 'BETWEEN',
+		);
+
 
 		// Get the shows for this week.
 		$shows = get_posts( array(
 			'post_type'   => 'wpst_show',
 			'nopaging'    => true,
 			'wpst_viewer' => $viewer,
-			'meta_query'  => array(
-				array(
-					'key'     => 'wpst_show_date',
-					'value'   => array( $start, $end ),
-					'compare' => 'BETWEEN',
-				),
-			),
+			'meta_query'  => array( $date_range ),
 		) );
 
 		// Loop through this week's shows and tally up the total count.

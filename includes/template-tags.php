@@ -31,7 +31,7 @@ function wpst_get_max_shows_for( $viewer = '' ) {
 /**
  * Returns the show count for the given viewer. Default range is the last/current week.
  * @param  string $viewer The wpst_viewer term slug.
- * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here.
+ * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here. Passing 'alltime' will return total count.
  * @return int            The total number of shows watched by this viewer this week.
  */
 function wpst_get_show_count_for( $viewer = '', $from = 'week' ) {
