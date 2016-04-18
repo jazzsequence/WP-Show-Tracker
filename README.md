@@ -6,7 +6,7 @@
 **Tags:**  
 **Requires at least:** 4.3  
 **Tested up to:**      4.3  
-**Stable tag:**        0.4.0  
+**Stable tag:**        0.4.1  
 **License:**           GPLv3  
 **License URI:**       http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -35,7 +35,10 @@ Track shows that you (or your kids) watch. Set a weekly limit and display an ale
 
 ## Changelog ##
 
-### 0.4.0
+### 0.4.1 ###
+* Added proper plural forms.
+
+### 0.4.0 ###
 * Integrated TGM Plugin Activation for WP-JSON API recommended plugin.
 
 ### 0.3.0 ###
