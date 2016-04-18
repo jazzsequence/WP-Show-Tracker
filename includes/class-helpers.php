@@ -116,8 +116,8 @@ class WPST_Helpers {
 	public function get_show_count_for( $viewer, $from = 'week' ) {
 
 		// Check if today is the start day. If it is, we need to adjust our start/end times.
-		$start_day = ( 'week' == $from ) ? $this->get_start_day() : $from;
-		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : strtotime( sprintf( 'last %s', $start_day ) );
+		$start_day = ( 'week' == $from ) ? strtotime( sprintf( 'last %s', $this->get_start_day() ) ) : strtotime( $from );
+		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : $start_day;
 		$end       = ( 'today' == $start_day ) ? strtotime( sprintf( 'next %s', $start_day ) ) : strtotime( 'today' );
 		$date_range = ( 'alltime' == $from ) ? array() : array(
 			'key'     => 'wpst_show_date',
