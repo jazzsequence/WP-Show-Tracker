@@ -107,16 +107,17 @@ class WPST_Helpers {
 	}
 
 	/**
-	 * Returns the show count for the current week for the given viewer.
+	 * Returns the show count for the given viewer. Default range is the last/current week.
 	 * @since  0.2.0
 	 * @param  string $viewer The wpst_viewer term slug.
 	 * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here.
 	 * @return int            The total number of shows watched by this viewer this week.
 	 */
-	public function get_show_count_this_week_for( $viewer, $from = '' ) {
+	public function get_show_count_for( $viewer, $from = 'week' ) {
 
 		// Check if today is the start day. If it is, we need to adjust our start/end times.
 		$start_day = ( '' == $from ) ? $this->get_start_day() : $from;
+		$start_day = ( 'week' == $from ) ? $this->get_start_day() : $from;
 		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : strtotime( sprintf( 'last %s', $start_day ) );
 		$end       = ( 'today' == $start_day ) ? strtotime( sprintf( 'next %s', $start_day ) ) : strtotime( 'today' );
 
@@ -196,7 +197,7 @@ class WPST_Helpers {
 				$shows = ( $this->get_max_shows_for_viewer( $viewer->slug ) ) ? sprintf( _n( '%s show', '%s shows', $this->get_max_shows_for_viewer( $viewer->slug ) ), $this->get_max_shows_for_viewer( $viewer->slug ) ) : '';
 
 				// Translators: 1: Viewer. 2: Show count this week. 3: Max shows for viewer.
-				$output .= sprintf( __( '%1$s has watched %2$d of %3$s this week.', '%1$s has watched %2$d of %3$d shows this week.', 'wp-show-tracker' ), $viewer->name, $this->get_show_count_this_week_for( $viewer->slug ), $shows );
+				$output .= sprintf( __( '%1$s has watched %2$d of %3$s this week.', '%1$s has watched %2$d of %3$d shows this week.', 'wp-show-tracker' ), $viewer->name, $this->get_show_count_for( $viewer->slug ), $shows );
 
 				// Translators: Remaining shows this week.
 				$output .= sprintf( ' ' . _n( '%1$d show remains.', '%1$d shows remain.', $this->get_remaining_shows_for( $viewer->slug ), 'wp-show-tracker' ), $this->get_remaining_shows_for( $viewer->slug ) );
@@ -214,7 +215,7 @@ class WPST_Helpers {
 	 * @return int            The number of shows remaining for that user.
 	 */
 	public function get_remaining_shows_for( $viewer ) {
-		$show_count = $this->get_show_count_this_week_for( $viewer );
+		$show_count = $this->get_show_count_for( $viewer );
 		$max_shows  = $this->get_max_shows_for_viewer( $viewer );
 		return absint( $max_shows ) - absint( $show_count );
 	}
@@ -226,7 +227,7 @@ class WPST_Helpers {
 	 * @return bool           True/false whether the current number of shows is equal to or greater than the max shows.
 	 */
 	public function watched_max_shows( $viewer ) {
-		return $this->get_show_count_this_week_for( $viewer ) >= $this->get_max_shows_for_viewer( $viewer );
+		return $this->get_show_count_for( $viewer ) >= $this->get_max_shows_for_viewer( $viewer );
 	}
 
 	/**

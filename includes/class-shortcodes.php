@@ -50,17 +50,17 @@ class WPST_Shortcodes {
 		// Get the viewer, make sure it's valid.
 		$viewer_slug = sanitize_title( $atts['viewer'] );
 		if ( 'all' !== $viewer_slug && $viewer = get_term_by( 'slug', $viewer_slug, 'wpst_viewer' ) ) {
-			$show_count_this_week_message = $this->get_show_count_this_week_for_viewer( $viewer, $viewer_slug );
+			$show_count_message = $this->the_show_count_for_viewer( $viewer, $viewer_slug );
 		} elseif ( 'all' == $viewer_slug ) {
 			$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 			foreach ( $viewers as $viewer ) {
-				$show_count_this_week_message .= $show_count_this_week_message = $this->get_show_count_this_week_for_viewer( $viewer, $viewer_slug );
+				$show_count_message .= $show_count_message = $this->the_show_count_for_viewer( $viewer, $viewer_slug );
 			}
 		} else {
-			$show_count_this_week_message = __( 'No valid viewer to display.', 'wp-show-tracker' );
+			$show_count_message = __( 'No valid viewer to display.', 'wp-show-tracker' );
 		}
 
-		$output = $show_count_this_week_message;
+		$output = $show_count_message;
 
 		// Render the shortcode output.
 		ob_start();
@@ -74,8 +74,8 @@ class WPST_Shortcodes {
 	 * @param  string $slug   The viewer term slug.
 	 * @return string         The output to display.
 	 */
-	private function get_show_count_this_week_for_viewer( $viewer, $slug ) {
-		$show_count_this_week = wpst()->helpers->get_show_count_this_week_for( $slug );
+	private function the_show_count_for_viewer( $viewer, $slug ) {
+		$show_count_this_week = wpst()->helpers->get_show_count_for( $slug );
 		$output = '<div class="alert alert-info"><p><span class="show-count" id="show-count-for-' . $slug . '">';
 		$output .= '<label for="' . $slug . '">' . esc_attr( $viewer->name ) . ':</label> ' . absint( $show_count_this_week );
 		$output .= '</span></p></div>';
