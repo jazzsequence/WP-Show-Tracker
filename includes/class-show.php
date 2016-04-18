@@ -57,6 +57,7 @@ class WPST_Show extends CPT_Core {
 	public function hooks() {
 		add_action( 'cmb2_init', array( $this, 'fields' ) );
 		add_action( 'admin_menu', array( $this, 'remove_metaboxes' ) );
+		add_action( 'save_post', array( $this, 'purge_transients' ) );
 	}
 
 	/**
@@ -152,5 +153,15 @@ class WPST_Show extends CPT_Core {
 	 */
 	public function remove_metaboxes() {
 		remove_meta_box( 'tagsdiv-wpst_viewer', 'wpst_show', 'side' );
+	}
+
+	/**
+	 * Delete alltime show count transients on save_post.
+	 */
+	public function purge_transients() {
+		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+		foreach ( $viewers as $viewer ) {
+			delete_transient( 'wpst_alltime_for_' . $viewer->slug );
+		}
 	}
 }
