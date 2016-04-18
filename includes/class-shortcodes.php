@@ -45,6 +45,7 @@ class WPST_Shortcodes {
 	public function shortcode( $atts, $content = null ) {
 		$atts = shortcode_atts( array(
 			'viewer' => '',
+			'from'   => 'week',
 		), $atts );
 
 		// Get the viewer, make sure it's valid.
