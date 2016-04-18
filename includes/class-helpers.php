@@ -189,7 +189,17 @@ class WPST_Helpers {
 		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 		foreach ( $viewers as $viewer ) {
 			if ( $this->get_max_shows_for_viewer( $viewer->slug ) >= 1 ) {
-				$output .= sprintf( '<div class="alert warn"><p>' . __( '%3$s has watched %1$d of %2$d shows this week. %4$d shows remain.', 'wp-show-tracker' ) . '</p></div>', $this->get_show_count_this_week_for( $viewer->slug ), $this->get_max_shows_for_viewer( $viewer->slug ), $viewer->name, $this->get_remaining_shows_for( $viewer->slug ) );
+				$output .= '<div class="alert warn"><p>';
+
+				// Get show count.
+				$shows = ( $this->get_max_shows_for_viewer( $viewer->slug ) ) ? sprintf( _n( '%s show', '%s shows', $this->get_max_shows_for_viewer( $viewer->slug ) ), $this->get_max_shows_for_viewer( $viewer->slug ) ) : '';
+
+				// Translators: 1: Viewer. 2: Show count this week. 3: Max shows for viewer.
+				$output .= sprintf( __( '%1$s has watched %2$d of %3$s this week.', '%1$s has watched %2$d of %3$d shows this week.', 'wp-show-tracker' ), $viewer->name, $this->get_show_count_this_week_for( $viewer->slug ), $shows );
+
+				// Translators: Remaining shows this week.
+				$output .= sprintf( ' ' . _n( '%1$d show remains.', '%1$d shows remain.', $this->get_remaining_shows_for( $viewer->slug ), 'wp-show-tracker' ), $this->get_remaining_shows_for( $viewer->slug ) );
+				$output .= '</p></div>';
 			}
 		}
 
