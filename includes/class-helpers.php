@@ -110,12 +110,13 @@ class WPST_Helpers {
 	 * Returns the show count for the current week for the given viewer.
 	 * @since  0.2.0
 	 * @param  string $viewer The wpst_viewer term slug.
+	 * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here.
 	 * @return int            The total number of shows watched by this viewer this week.
 	 */
-	public function get_show_count_this_week_for( $viewer ) {
+	public function get_show_count_this_week_for( $viewer, $from = '' ) {
 
 		// Check if today is the start day. If it is, we need to adjust our start/end times.
-		$start_day = $this->get_start_day();
+		$start_day = ( '' == $from ) ? $this->get_start_day() : $from;
 		$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : strtotime( sprintf( 'last %s', $start_day ) );
 		$end       = ( 'today' == $start_day ) ? strtotime( sprintf( 'next %s', $start_day ) ) : strtotime( 'today' );
 

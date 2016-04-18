@@ -31,11 +31,12 @@ function wpst_get_max_shows_for( $viewer = '' ) {
 /**
  * Returns the show count for the current week for the given viewer.
  * @param  string $viewer The wpst_viewer term slug.
+ * @param  string $from   A from date, day or time. Gets run through strtotime so almost any valid time string will work here.
  * @return int            The total number of shows watched by this viewer this week.
  */
-function wpst_get_show_count_this_week_for( $viewer = '' ) {
+function wpst_get_show_count_this_week_for( $viewer = '', $from = '' ) {
 	// Check if the viewer exists and return a wp_die message if it doesn't.
 	wp_show_tracker()->helpers->viewer_die( $viewer );
 
-	return wp_show_tracker()->helpers->get_show_count_this_week_for( $viewer );
+	return wp_show_tracker()->helpers->get_show_count_this_week_for( $viewer, $from );
 }
