@@ -33,6 +33,7 @@ class WPST_Shortcodes {
 	 * @return void
 	 */
 	public function hooks() {
+		add_shortcode( 'wpst', array( $this, 'shortcode' ) );
 	}
 
 	/**
