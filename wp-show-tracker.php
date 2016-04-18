@@ -143,10 +143,11 @@ class WP_Show_Tracker {
 	 */
 	public function plugin_classes() {
 		// Attach other plugin classes to the base plugin class.
-		$this->show    = new WPST_Show( $this );
-		$this->viewer  = new WPST_Viewer( $this );
-		$this->options = new WPST_Options( $this );
-		$this->helpers = new WPST_Helpers( $this );
+		$this->show       = new WPST_Show( $this );
+		$this->viewer     = new WPST_Viewer( $this );
+		$this->options    = new WPST_Options( $this );
+		$this->helpers    = new WPST_Helpers( $this );
+		$this->shortcodes = new WPST_Shortcodes( $this );
 
 		// Include the template tags file.
 		require_once( $this->path . '/includes/template-tags.php' );
