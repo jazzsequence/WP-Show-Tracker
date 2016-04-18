@@ -36,6 +36,23 @@ class WPST_Shortcodes {
 	}
 
 	/**
+	 * Renders the shortcode to display stats.
+	 * @param  array  $atts    Shortcode attributes array.
+	 * @param  string $content Content inside the shortcode. Not used so set to null.
+	 * @return string          Shortcode output.
+	 */
+	public function shortcode( $atts, $content = null ) {
+		$atts = shortcode_atts( array(
+			'viewer' => '',
+		), $atts );
+
+		// Render the shortcode output.
+		ob_start();
+		echo $output; // WPCS: XSS ok. Everything is already sanitized.
+		return ob_get_clean();
+	}
+
+	/**
 	 * Renders the output of the show count this week for viewer.
 	 * @param  object $viewer The viewer WP_Term object.
 	 * @param  string $slug   The viewer term slug.
