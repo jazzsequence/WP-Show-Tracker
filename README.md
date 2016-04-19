@@ -37,7 +37,8 @@ Track shows that you (or your kids) watch. Set a weekly limit and display an ale
 
 ### 0.5.0 ###
 * Added shortcodes...
-* Added [wpst viewer="viewer-name"] shortcode to display all shows for that viewer for the current week.
+* Added `[wpst viewer="viewer-name"]` shortcode to display all shows for that viewer for the current week.
+* Can display shows from a custom timeframe, too. Any strtotime-valid string is accepted, e.g. "last week", "last month", "2 days ago", etc. Can also pass "alltime" to display total count for all shows from the beginning of time. Usage: `[wpst viewer="viewer-name" from="3 weeks ago"]` or `[wpst viewer="Viewer Name" from="alltime"]`.
 
 ### 0.4.1 ###
 * Added proper plural forms.
