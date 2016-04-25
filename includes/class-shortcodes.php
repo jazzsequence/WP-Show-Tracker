@@ -33,18 +33,18 @@ class WPST_Shortcodes {
 	 * @return void
 	 */
 	public function hooks() {
-		add_shortcode( 'wpst', array( $this, 'shortcode' ) );
+		add_shortcode( 'wpst', array( $this, 'wpst_shortcode' ) );
 		add_shortcode( 'wp-show-tracker', array( $this, 'cmb2_frontend_form' ) );
 		add_action( 'cmb2_after_init', array( $this, 'handle_frontend_new_post_form_submission' ) );
 	}
 
 	/**
-	 * Renders the shortcode to display stats.
+	 * Renders the shortcode to display show counts.
 	 * @param  array  $atts    Shortcode attributes array.
 	 * @param  string $content Content inside the shortcode. Not used so set to null.
 	 * @return string          Shortcode output.
 	 */
-	public function shortcode( $atts, $content = null ) {
+	public function wpst_shortcode( $atts, $content = null ) {
 		$atts = shortcode_atts( array(
 			'viewer' => '',
 			'from'   => 'week',
