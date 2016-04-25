@@ -10,14 +10,14 @@ class WPST_Shortcodes {
 	 * Parent plugin class
 	 *
 	 * @var   class
-	 * @since NEXT
+	 * @since 0.5.0
 	 */
 	protected $plugin = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @since  NEXT
+	 * @since  0.5.0
 	 * @param  object $plugin Main plugin object.
 	 * @return void
 	 */
@@ -29,7 +29,7 @@ class WPST_Shortcodes {
 	/**
 	 * Initiate our hooks
 	 *
-	 * @since  NEXT
+	 * @since  0.5.0
 	 * @return void
 	 */
 	public function hooks() {
@@ -41,6 +41,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Renders the shortcode to display show counts.
+	 * @since  0.5.0
 	 * @param  array  $atts    Shortcode attributes array.
 	 * @param  string $content Content inside the shortcode. Not used so set to null.
 	 * @return string          Shortcode output.
@@ -101,6 +102,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Renders the shortcode to display stats.
+	 * @since  0.5.1
 	 * @param  array  $atts    Shortcode attributes array.
 	 * @param  string $content Content inside the shortcode. Not used so set to null.
 	 * @return string          Shortcode output.
@@ -153,6 +155,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Renders the output of the show count this week for viewer.
+	 * @since  0.5.0
 	 * @param  object $viewer The viewer WP_Term object.
 	 * @param  string $slug   The viewer term slug.
 	 * @param  string $from   A from date, day or time.
@@ -171,7 +174,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Handle the cmb-frontend-form shortcode
-	 *
+	 * @since  0.1.0
 	 * @param  array $atts Array of shortcode attributes.
 	 * @return string      Form html
 	 */
@@ -240,7 +243,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Gets the front-end-post-form cmb instance
-	 *
+	 * @since  0.1.0
 	 * @return CMB2 object
 	 */
 	public function cmb2_get() {
@@ -257,6 +260,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Sanitizes the viewer slug and makes sure the term exists.
+	 * @since  0.1.0
 	 * @param  string $viewer The slug for the viewer passed from the form.
 	 * @return string         The sanitized viewer slug.
 	 */
@@ -277,7 +281,7 @@ class WPST_Shortcodes {
 
 	/**
 	 * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
-	 *
+	 * @since  0.1.0
 	 * @return mixed
 	 */
 	public function handle_frontend_new_post_form_submission() {
