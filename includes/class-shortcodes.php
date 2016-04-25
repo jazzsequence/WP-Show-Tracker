@@ -70,7 +70,7 @@ class WPST_Shortcodes {
 				$show_count_message .= $this->the_show_count_for_viewer( $viewer, $viewer_slug, $atts['from'] );
 			}
 		} else {
-			$show_count_message .= '<tr colspan=2><td>' . __( 'No valid viewer to display.', 'wp-show-tracker' ) . '</td></tr>';
+			$show_count_message .= '<tr><td colspan=2>' . __( 'No valid viewer to display.', 'wp-show-tracker' ) . '</td></tr>';
 			$has_viewer = false;
 		}
 
