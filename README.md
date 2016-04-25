@@ -6,7 +6,7 @@
 **Tags:**  
 **Requires at least:** 4.3  
 **Tested up to:**      4.3  
-**Stable tag:**        0.5.0  
+**Stable tag:**        0.5.1  
 **License:**           GPLv3  
 **License URI:**       http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -34,6 +34,9 @@ Track shows that you (or your kids) watch. Set a weekly limit and display an ale
 ![options page](https://www.evernote.com/l/ABPbIgidTaNA3boDDEEjCbdfM5uEbzPBlLwB/image.png)
 
 ## Changelog ##
+
+### 0.5.1 ###
+* Added wpst-stats shortcode to show a list of counts for all shows. Usage `[wpst-stats viewer="viewer-name"]` or `[wpst viewer="Viewer Name" since="last week"]`.
 
 ### 0.5.0 ###
 * Added shortcodes...
