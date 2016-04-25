@@ -111,27 +111,30 @@ class WPST_Shortcodes {
 			'since'  => 'week',
 		), $atts );
 
-		$stats = '<div class="wpst-shows"><table class="wpst-shows-for-user-table">
-			<thead>
-				<th>' . __( 'Viewer', 'wp-show-tracker' ) . '</th>
-				<th>' . __( 'Count', 'wp-show-tracker' ) . '</th>
+		$viewer = get_term_by( 'slug', sanitize_title( $atts['viewer'] ), 'wpst_viewer' );
+
+		$stats = '<div class="wpst-stats"><table class="wpst-stats-for-user-table">';
+		$stats .= '<thead>';
+		if ( $viewer ) {
+			$stats .= '<tr><th colspan=2><div class="aligncenter">' . sprintf( __( 'Shows for %s', 'wp-show-tracker' ), str_replace( '-', ' ', ucwords( $atts['viewer'] ) ) ) . '</div></th></tr>';
+		}
+		$stats .= '
+				<tr>
+					<th>' . __( 'Title', 'wp-show-tracker' ) . '</th>
+					<th>' . __( 'Count', 'wp-show-tracker' ) . '</th>
+				</tr>
 			</thead>
 		<tbody>';
-
-		$has_viewer = ( isset( $atts['viewer'] ) ) ? true : false;
-
-		// Get the viewer, make sure it's valid.
-		$viewer_slug = ( $has_viewer ) ? sanitize_title( $atts['viewer'] ) : '';
 
 		$stats .= '</tbody></table>';
 
 		// Only display the show count message if there was a viewer.
-		if ( $has_viewer ) {
+		if ( $viewer ) {
 			$stats .= '<div class="alignright"><em>';
-			if ( 'alltime' == $atts['from'] ) {
+			if ( 'alltime' == $atts['since'] || '' == $atts['since'] ) {
 				$stats .= __( 'Total shows watched', 'wp-show-tracker' );
 			} else {
-				$start_day = ( 'week' == $atts['from'] ) ? strtotime( sprintf( 'last %s', wpst()->helpers->get_start_day() ) ) : strtotime( $atts['from'] );
+				$start_day = ( 'week' == $atts['since'] ) ? strtotime( sprintf( 'last %s', wpst()->helpers->get_start_day() ) ) : strtotime( $atts['since'] );
 				$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : $start_day;
 				$stats .= sprintf( __( 'Shows watched since %s', 'wp-show-tracker' ), date( get_option( 'date_format' ), $start ) );
 			}
