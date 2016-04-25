@@ -34,6 +34,7 @@ class WPST_Shortcodes {
 	 */
 	public function hooks() {
 		add_shortcode( 'wpst', array( $this, 'wpst_shortcode' ) );
+		add_shortcode( 'wpst-stats', array( $this, 'stats_shortcode' ) );
 		add_shortcode( 'wp-show-tracker', array( $this, 'cmb2_frontend_form' ) );
 		add_action( 'cmb2_after_init', array( $this, 'handle_frontend_new_post_form_submission' ) );
 	}
@@ -91,6 +92,55 @@ class WPST_Shortcodes {
 		$show_count_message .= '</div>';
 
 		$output = $show_count_message;
+
+		// Render the shortcode output.
+		ob_start();
+		echo $output; // WPCS: XSS ok. Everything is already sanitized.
+		return ob_get_clean();
+	}
+
+	/**
+	 * Renders the shortcode to display stats.
+	 * @param  array  $atts    Shortcode attributes array.
+	 * @param  string $content Content inside the shortcode. Not used so set to null.
+	 * @return string          Shortcode output.
+	 */
+	public function stats_shortcode( $atts, $content = null ) {
+		$atts = shortcode_atts( array(
+			'viewer' => '',
+			'since'  => 'week',
+		), $atts );
+
+		$stats = '<div class="wpst-shows"><table class="wpst-shows-for-user-table">
+			<thead>
+				<th>' . __( 'Viewer', 'wp-show-tracker' ) . '</th>
+				<th>' . __( 'Count', 'wp-show-tracker' ) . '</th>
+			</thead>
+		<tbody>';
+
+		$has_viewer = ( isset( $atts['viewer'] ) ) ? true : false;
+
+		// Get the viewer, make sure it's valid.
+		$viewer_slug = ( $has_viewer ) ? sanitize_title( $atts['viewer'] ) : '';
+
+		$stats .= '</tbody></table>';
+
+		// Only display the show count message if there was a viewer.
+		if ( $has_viewer ) {
+			$stats .= '<div class="alignright"><em>';
+			if ( 'alltime' == $atts['from'] ) {
+				$stats .= __( 'Total shows watched', 'wp-show-tracker' );
+			} else {
+				$start_day = ( 'week' == $atts['from'] ) ? strtotime( sprintf( 'last %s', wpst()->helpers->get_start_day() ) ) : strtotime( $atts['from'] );
+				$start     = ( strtotime( 'today' ) == strtotime( $start_day ) ) ? strtotime( 'today midnight' ) : $start_day;
+				$stats .= sprintf( __( 'Shows watched since %s', 'wp-show-tracker' ), date( get_option( 'date_format' ), $start ) );
+			}
+			$stats .= '</em></div>';
+		}
+
+		$stats .= '</div>';
+
+		$output = $stats;
 
 		// Render the shortcode output.
 		ob_start();
