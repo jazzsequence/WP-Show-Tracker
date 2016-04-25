@@ -128,6 +128,12 @@ class WPST_Shortcodes {
 			</thead>
 		<tbody>';
 
+		$shows = ( $viewer ) ? wpst()->helpers->get_unique_show_list( $viewer->slug ) : array();
+
+		foreach ( $shows as $show ) {
+			$show_count = wpst()->helpers->count_unique_shows( $show, $viewer->slug );
+		}
+
 		$stats .= '</tbody></table>';
 
 		// Only display the show count message if there was a viewer.
