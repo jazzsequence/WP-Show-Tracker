@@ -156,12 +156,23 @@ class WPST_Show extends CPT_Core {
 	}
 
 	/**
-	 * Delete alltime show count transients on save_post.
+	 * Delete all transients on save_post.
 	 */
 	public function purge_transients() {
 		$viewers = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
 		foreach ( $viewers as $viewer ) {
 			delete_transient( 'wpst_alltime_for_' . $viewer->slug );
+
+			// Get unique show list for this viewer.
+			$unique_shows = wpst()->helpers->get_unique_show_list( $viewer->slug );
+
+			// Delete the transient after we've used it.
+			delete_transient( 'unique_show_list_for_' . $viewer->slug );
+
+			// Purge all the show counts for this user.
+			foreach ( $unique_shows as $show ) {
+				delete_transient( 'show_count_' . sanitize_title( $show ) . '_for_' . $viewer->slug );
+			}
 		}
 	}
 }
