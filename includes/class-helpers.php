@@ -89,6 +89,65 @@ class WPST_Helpers {
 	}
 
 	/**
+	 * Returns an array of unique show names.
+	 * @since  0.5.1
+	 * @return array Unique show names for all shows fetched from the WP-API.
+	 */
+	public function get_unique_show_list( $viewer ) {
+
+		if ( false === ( $shows = get_transient( 'unique_show_list_for_' . $viewer ) ) ) {
+			// Get the shows.
+			$shows = get_posts( array(
+				'post_type' => 'wpst_show',
+				'post_status' => 'publish',
+				'wpst_viewer' => $viewer,
+				'posts_per_page' => -1,
+			) );
+
+			set_transient( 'unique_show_list_for_' . $viewer, $shows, 24 * HOUR_IN_SECONDS );
+		}
+
+		if ( $shows && ! is_wp_error( $shows ) ) {
+
+			$show_list = array();
+			// Build an array of show titles.
+			foreach ( $shows as $show ) {
+				$show_list[] = $show->post_title;
+			}
+
+			// Strip out the duplicate titles.
+			$show_list = array_unique( $show_list );
+
+			return $show_list;
+		}
+
+		return new WP_Error( 'get_unique_show_list_failed', __( 'Get unique show list failed.', 'wp-show-tracker' ), $request );
+	}
+
+	/**
+	 * Get a count for how many times the passed show was watched.
+	 * @since  0.5.1
+	 * @param  string $title  The show's actual title.
+	 * @param  string $viewer The viewer slug.
+	 * @return int            The total count for this show.
+	 */
+	public function count_unique_shows( $title, $viewer ) {
+		if ( false === ( $unique_shows = get_transient( 'show_count_' . sanitize_title( $title ) . '_for_' . $viewer ) ) ) {
+			$unique_shows = new WP_Query( array(
+				'post_type' => 'wpst_show',
+				'wpst_viewer' => $viewer,
+				'post_status' => 'publish',
+				's' => $title,
+				'posts_per_page' => -1,
+			) );
+
+			set_transient( 'show_count_' . sanitize_title( $title ) . '_for_' . $viewer, $unique_shows, 7 * DAY_IN_SECONDS );
+		}
+
+		return $unique_shows->found_posts;
+	}
+
+	/**
 	 * Get the max shows for the viewer. Defaults to 0 (unlimited).
 	 * @param  string $viewer A valid slug for the viewer term.
 	 * @return int            The number of shows for that viewer. Default is 0.
