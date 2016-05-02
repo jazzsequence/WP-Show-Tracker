@@ -10,3 +10,30 @@ ul.ui-autocomplete {
 div#cmb2-metabox-wpst_show_metabox ul.cmb2-radio-list {
 	list-style-type: none;
 }
+
+.wpst-stats-for-user-table .count {
+	width: 200px;
+	height: 25px;
+	margin: 0 auto;
+	line-height: 25px;
+	color: #ffffff;
+	font-weight: bold;
+	position: absolute;
+	z-index: 1;
+	text-align: center;
+}
+.wpst-stats-for-user-table .progress {
+	background: gray;
+	position: relative;
+	width: 200px;
+	height: 25px;
+	display: block;
+}
+
+.wpst-stats-for-user-table .progress > span.progress-bar {
+	background: red;
+	position: relative;
+	height: 25px;
+	display: block;
+	overflow: hidden;
+}
