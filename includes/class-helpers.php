@@ -196,7 +196,7 @@ class WPST_Helpers {
 
 	/**
 	 * Return the highest show count across all shows.
-	 * @return [type]        [description]
+	 * @return int The most times any show has been viewed across all shows.
 	 */
 	public function get_highest_show_count() {
 		$shows = class_exists( 'WP_REST_Controller' ) ? $this->autosuggest_terms() : $this->get_show_list();
@@ -213,6 +213,7 @@ class WPST_Helpers {
 				}
 			}
 
+			// Set the transient to expire in 24 hours -- highest count could change tomorrow!
 			set_transient( 'wpst_high_count', $high_count, 24 * HOUR_IN_SECONDS );
 		}
 
