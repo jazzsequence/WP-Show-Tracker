@@ -86,7 +86,17 @@ class WPST_Helpers {
 
 		if ( false === ( $shows = get_transient( 'unique_show_list_for_' . $viewer ) ) ) {
 			// Get the shows.
-			$shows = get_posts( array(
+			$shows = $this->get_show_list( array( 'wpst_viewer' => $viewer ) );
+
+			set_transient( 'unique_show_list_for_' . $viewer, $shows, 24 * HOUR_IN_SECONDS );
+		}
+
+		if ( $shows && ! is_wp_error( $shows ) ) {
+			return $this->unique( $shows );
+		}
+
+		return new WP_Error( 'get_unique_show_list_failed', __( 'Get unique show list failed.', 'wp-show-tracker' ), $shows );
+	}
 				'post_type' => 'wpst_show',
 				'post_status' => 'publish',
 				'wpst_viewer' => $viewer,
