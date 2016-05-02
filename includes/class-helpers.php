@@ -91,11 +91,7 @@ class WPST_Helpers {
 			set_transient( 'unique_show_list_for_' . $viewer, $shows, 24 * HOUR_IN_SECONDS );
 		}
 
-		if ( $shows && ! is_wp_error( $shows ) ) {
-			return $this->unique( $shows );
-		}
-
-		return new WP_Error( 'get_unique_show_list_failed', __( 'Get unique show list failed.', 'wp-show-tracker' ), $shows );
+		return ( $shows ) ? $shows : new WP_Error( 'get_unique_show_list_failed', __( 'Get unique show list failed.', 'wp-show-tracker' ), $shows );
 	}
 
 	/**
