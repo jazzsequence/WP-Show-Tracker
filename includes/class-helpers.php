@@ -109,9 +109,9 @@ class WPST_Helpers {
 
 			// Define the default args. If atts have been passed, use the viewer and posts_per_page for those values (if they exist).
 			$args = array(
-				'post_type' => 'wpst_show',
-				'post_status' => 'publish',
-				'wpst_viewer' => ( isset( $atts['wpst_viewer'] ) && term_exists( $atts['wpst_viewer'], 'wpst_viewer' ) ) ? $atts['wpst_viewer'] : array(),
+				'post_type'      => 'wpst_show',
+				'post_status'    => 'publish',
+				'wpst_viewer'    => ( isset( $atts['wpst_viewer'] ) && term_exists( $atts['wpst_viewer'], 'wpst_viewer' ) ) ? $atts['wpst_viewer'] : array(),
 				'posts_per_page' => ( isset( $atts['posts_per_page'] ) ) ? $atts['posts_per_page'] : -1,
 			);
 
@@ -184,10 +184,10 @@ class WPST_Helpers {
 	public function count_unique_shows( $title, $viewer ) {
 		if ( false === ( $unique_shows = get_transient( 'show_count_' . sanitize_title( $title ) . '_for_' . $viewer ) ) ) {
 			$unique_shows = new WP_Query( array(
-				'post_type' => 'wpst_show',
-				'wpst_viewer' => $viewer,
-				'post_status' => 'publish',
-				's' => $title,
+				'post_type'      => 'wpst_show',
+				'wpst_viewer'    => $viewer,
+				'post_status'    => 'publish',
+				's'              => $title,
 				'posts_per_page' => -1,
 			) );
 
