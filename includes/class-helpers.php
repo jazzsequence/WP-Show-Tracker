@@ -179,7 +179,7 @@ class WPST_Helpers {
 	 */
 	public function count_unique_shows( $title, $viewer ) {
 		if ( false === ( $unique_shows = get_transient( 'show_count_' . sanitize_title( $title ) . '_for_' . $viewer ) ) ) {
-			$unique_shows = new WP_Query( array(
+			$unique_query = new WP_Query( array(
 				'post_type'      => 'wpst_show',
 				'wpst_viewer'    => $viewer,
 				'post_status'    => 'publish',
@@ -187,10 +187,11 @@ class WPST_Helpers {
 				'posts_per_page' => -1,
 			) );
 
+			$unique_shows = $unique_query->found_posts;
 			set_transient( 'show_count_' . sanitize_title( $title ) . '_for_' . $viewer, $unique_shows, 7 * DAY_IN_SECONDS );
 		}
 
-		return $unique_shows->found_posts;
+		return $unique_shows;
 	}
 
 	/**
