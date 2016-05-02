@@ -202,7 +202,7 @@ class WPST_Helpers {
 	 * @return [type]        [description]
 	 */
 	public function get_highest_show_count() {
-		$shows = class_exists( 'WP_REST_Controller' ) ? $this->autosuggest_terms() : $this->get_all_show_list();
+		$shows = class_exists( 'WP_REST_Controller' ) ? $this->autosuggest_terms() : $this->get_show_list();
 
 		if ( false === ( $high_count = get_transient( 'wpst_high_count' ) ) ) {
 			$high_count = 0;
