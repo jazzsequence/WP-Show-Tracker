@@ -168,6 +168,31 @@ class WPST_Helpers {
 	}
 
 	/**
+	 * Return the highest show count across all shows.
+	 * @return [type]        [description]
+	 */
+	public function get_highest_show_count() {
+		$shows = class_exists( 'WP_REST_Controller' ) ? $this->autosuggest_terms() : $this->get_all_show_list();
+
+		if ( false === ( $high_count = get_transient( 'wpst_high_count' ) ) ) {
+			$high_count = 0;
+			$viewers    = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+
+			// Loop through all the viewers, then loop through and count the shows for each viewer. Set the high count to the largest number.
+			foreach ( $viewers as $viewer ) {
+				foreach ( $shows as $show ) {
+					$show_count = $this->count_unique_shows( $show, $viewer->slug );
+					$high_count = ( $show_count > $high_count ) ? $show_count : $high_count;
+				}
+			}
+
+			set_transient( 'wpst_high_count', $high_count, 24 * HOUR_IN_SECONDS );
+		}
+
+		return $high_count;
+	}
+
+	/**
 	 * Get the max shows for the viewer. Defaults to 0 (unlimited).
 	 * @param  string $viewer A valid slug for the viewer term.
 	 * @return int            The number of shows for that viewer. Default is 0.
