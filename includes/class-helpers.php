@@ -144,9 +144,9 @@ class WPST_Helpers {
 	 * @return array          An array of _unique_ show names from the given shows.
 	 */
 	private function unique( $shows, $use_api = false ) {
+		$show_list = array();
 
 		if ( ! $use_api ) {
-			$show_list = array();
 			// Build an array of show titles.
 			foreach ( $shows as $show ) {
 				$show_list[] = $show->post_title;
