@@ -109,7 +109,17 @@ class WPST_Helpers {
 		}
 
 		if ( $shows && ! is_wp_error( $shows ) ) {
+	}
 
+	/**
+	 * Get an array of only the unique show names.
+	 * @param  array $shows   An array of show names.
+	 * @param  bool  $use_api Whether the passed shows array is coming from the WP-API.
+	 * @return array          An array of _unique_ show names from the given shows.
+	 */
+	private function unique( $shows, $use_api = false ) {
+
+		if ( ! $use_api ) {
 			$show_list = array();
 			// Build an array of show titles.
 			foreach ( $shows as $show ) {
@@ -118,11 +128,20 @@ class WPST_Helpers {
 
 			// Strip out the duplicate titles.
 			$show_list = array_unique( $show_list );
+		} else {
+			// Decode the json.
+			$posts = json_decode( $shows['body'] );
 
-			return $show_list;
+			// Build an array of show titles.
+			foreach ( $posts as $show ) {
+				$show_list[] = $show->title->rendered;
+			}
+
+			// Strip out the duplicate titles.
+			$show_list = array_unique( $show_list );
 		}
 
-		return new WP_Error( 'get_unique_show_list_failed', __( 'Get unique show list failed.', 'wp-show-tracker' ), $request );
+		return $show_list;
 	}
 
 	/**
