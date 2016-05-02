@@ -67,22 +67,10 @@ class WPST_Helpers {
 	 */
 	public function autosuggest_terms() {
 		// Get the shows from WP-API.
-		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows?filter[posts_per_page]=100' ) );
+		$request = wp_remote_get( home_url( '/wp-json/wp/v2/shows?filter[posts_per_page]=1000' ) );
 
 		if ( $request && ! is_wp_error( $request ) ) {
-
-			// Decode the json.
-			$posts = json_decode( $request['body'] );
-
-			// Build an array of show titles.
-			foreach ( $posts as $show ) {
-				$shows[] = $show->title->rendered;
-			}
-
-			// Strip out the duplicate titles.
-			$shows = array_unique( $shows );
-
-			return $shows;
+			return $this->unique( $request, true );
 		}
 
 		return new WP_Error( 'wpst_remote_get_fail', __( 'WordPress remote get operation failed.', 'wp-show-tracker' ), $request );
