@@ -132,8 +132,17 @@ class WPST_Shortcodes {
 
 		$shows = ( $viewer ) ? wpst()->helpers->get_unique_show_list( $viewer->slug ) : array();
 
+		// Loop through our shows.
 		foreach ( $shows as $show ) {
-			$show_count = wpst()->helpers->count_unique_shows( $show, $viewer->slug );
+			// Filter out empty title strings.
+			if ( '' !== $show ) {
+				$show_count = wpst()->helpers->count_unique_shows( $show, $viewer->slug );
+				$stats .= '
+				<tr>
+					<td>' . esc_attr( $show ) . '</td>
+					<td><div class="count">' . absint( $show_count ) . '</div><div class="progress"><span class="progress-bar" style="width=' . ( absint( $show_count ) / absint( $high_count ) * 100 ) . '%"></span></div></td>
+				</tr>';
+			}
 		}
 
 		$stats .= '</tbody></table>';
