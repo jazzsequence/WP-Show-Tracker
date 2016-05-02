@@ -89,9 +89,10 @@ class WPST_Helpers {
 	}
 
 	/**
-	 * Returns an array of unique show names.
+	 * Returns an array of unique show names for a given viewer.
 	 * @since  0.5.1
-	 * @return array Unique show names for all shows fetched from the WP-API.
+	 * @param  string $viewer The viewer slug.
+	 * @return array          Unique show names for all shows for the passed viewer.
 	 */
 	public function get_unique_show_list( $viewer ) {
 
