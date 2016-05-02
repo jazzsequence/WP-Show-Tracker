@@ -97,16 +97,48 @@ class WPST_Helpers {
 
 		return new WP_Error( 'get_unique_show_list_failed', __( 'Get unique show list failed.', 'wp-show-tracker' ), $shows );
 	}
+
+	/**
+	 * Returns an array of unique show names across all shows for all viewers.
+	 * @param  array $atts Any passed custom WP_Query arguments.
+	 * @return array       Only unique show names.
+	 */
+	public function get_show_list( $atts = array() ) {
+
+		if ( false === ( $shows = get_transient( 'wpst_get_all_show_list' ) ) ) {
+
+			// Define the default args. If atts have been passed, use the viewer and posts_per_page for those values (if they exist).
+			$args = array(
 				'post_type' => 'wpst_show',
 				'post_status' => 'publish',
-				'wpst_viewer' => $viewer,
-				'posts_per_page' => -1,
-			) );
+				'wpst_viewer' => ( isset( $atts['wpst_viewer'] ) && term_exists( $atts['wpst_viewer'], 'wpst_viewer' ) ) ? $atts['wpst_viewer'] : array(),
+				'posts_per_page' => ( isset( $atts['posts_per_page'] ) ) ? $atts['posts_per_page'] : -1,
+			);
 
-			set_transient( 'unique_show_list_for_' . $viewer, $shows, 24 * HOUR_IN_SECONDS );
+			// We're going to do an array merge of all the other passed WP_Query arguments. Reset viewer and posts per page before we do the array merge.
+			if ( ! empty( $atts ) ) {
+				if ( isset( $atts['wpst_viewer'] ) ) {
+					unset( $atts['wpst_viewer'] );
+				}
+				if ( isset( $atts['posts_per_page'] ) ) {
+					unset( $atts['posts_per_page'] );
+				}
+			}
+
+			// Merge the arguments.
+			$args = ( ! empty( $atts ) ) ? array_merge( $atts, $args ) : $args;
+
+			// Get the shows.
+			$shows = get_posts( $args );
+
+			set_transient( 'wpst_get_all_show_list', $shows, 24 * HOUR_IN_SECONDS );
 		}
 
 		if ( $shows && ! is_wp_error( $shows ) ) {
+			return $this->unique( $shows );
+		}
+
+		return new WP_Error( 'get_all_show_list_failed', __( 'Get all show list failed.', 'wp-show-tracker' ), $shows );
 	}
 
 	/**
