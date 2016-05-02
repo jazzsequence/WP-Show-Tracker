@@ -174,5 +174,8 @@ class WPST_Show extends CPT_Core {
 				delete_transient( 'show_count_' . sanitize_title( $show ) . '_for_' . $viewer->slug );
 			}
 		}
+
+		// Delete the show high count.
+		delete_transient( 'wpst_high_count' );
 	}
 }
