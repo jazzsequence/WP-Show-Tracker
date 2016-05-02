@@ -115,6 +115,8 @@ class WPST_Shortcodes {
 
 		$viewer = get_term_by( 'slug', sanitize_title( $atts['viewer'] ), 'wpst_viewer' );
 
+		$high_count = wpst()->helpers->get_highest_show_count();
+
 		$stats = '<div class="wpst-stats"><table class="wpst-stats-for-user-table">';
 		$stats .= '<thead>';
 		if ( $viewer ) {
