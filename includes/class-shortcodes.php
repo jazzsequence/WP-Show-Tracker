@@ -165,6 +165,8 @@ class WPST_Shortcodes {
 				$stats .= sprintf( __( 'Shows watched since %s', 'wp-show-tracker' ), date( get_option( 'date_format' ), $start ) );
 			}
 			$stats .= '</em></div>';
+		} else {
+			$stats .= '<div class="alignright"><em>' . __( 'No valid viewer to display.', 'wp-show-tracker' ) . '</em></em>';
 		}
 
 		$stats .= '</div>';
