@@ -205,7 +205,7 @@ class WPST_Shortcodes {
 	 * @param  array $atts Array of shortcode attributes.
 	 * @return string      Form html
 	 */
-	public function cmb2_frontend_form( $atts = array() ) {
+	public function show_tracker_form( $atts = array() ) {
 
 		// Get CMB2 metabox object.
 		$cmb = $this->cmb2_get();
