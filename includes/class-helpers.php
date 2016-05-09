@@ -139,21 +139,31 @@ class WPST_Helpers {
 
 	/**
 	 * Get an array of only the unique show names.
-	 * @param  array $shows   An array of show names.
-	 * @param  bool  $use_api Whether the passed shows array is coming from the WP-API.
-	 * @return array          An array of _unique_ show names from the given shows.
+	 * @param  array  $shows   An array of show names.
+	 * @param  bool   $use_api Whether the passed shows array is coming from the WP-API.
+	 * @param  string $viewer  A viewer slug.
+	 * @return array           An array of _unique_ show names from the given shows.
 	 */
-	private function unique( $shows, $use_api = false ) {
+	private function unique( $shows, $use_api = false, $viewer = '' ) {
 		$show_list = array();
 
 		if ( ! $use_api ) {
-			// Build an array of show titles.
-			foreach ( $shows as $show ) {
-				$show_list[] = $show->post_title;
+			// Build an array of show titles. Check for viewer to see if we should sort the results.
+			if ( $viewer ) {
+				foreach ( $shows as $show ) {
+					$show_list[ $this->count_unique_shows( $show->post_title, $viewer ) ] = $show->post_title;
+				}
+			} else {
+				foreach ( $shows as $show ) {
+					$show_list[ $this->count_unique_shows( $show->post_title, '' ) ] = $show->post_title;
+				}
 			}
-
-			// Strip out the duplicate titles.
+			// Strip out the duplicate titles and sort by number of shows viewed.
 			$show_list = array_unique( $show_list );
+			ksort( $show_list, SORT_NUMERIC );
+
+			// Reverse the sort so it's in descending order.
+			rsort( $show_list, SORT_NUMERIC );
 		} else {
 			// Decode the json.
 			$posts = json_decode( $shows['body'] );
