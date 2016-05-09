@@ -140,7 +140,14 @@ class WPST_Shortcodes {
 				$stats .= '
 				<tr>
 					<td>' . esc_attr( $show ) . '</td>
-					<td><div class="count">' . absint( $show_count ) . '</div><div class="progress"><span class="progress-bar" style="width=' . ( absint( $show_count ) / absint( $high_count ) * 100 ) . '%"></span></div></td>
+					<td>
+						<div class="progress-bar-wrapper">
+							<div class="count">' . absint( $show_count ) . '</div>
+							<div class="progress">
+								<span class="progress-bar" style="width: ' . ( absint( $show_count ) / absint( $high_count ) * 100 ) . '%"></span>
+							</div>
+						</div>
+					</td>
 				</tr>';
 			}
 		}
