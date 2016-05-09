@@ -180,6 +180,38 @@ class WPST_Shortcodes {
 		return ob_get_clean();
 	}
 
+	public function most_watched_shortcode( $atts, $content = null ) {
+		$atts = shortcode_atts( array(
+			'viewer' => 'all',
+		), $atts );
+
+		$viewer = ( 'all' == $atts['viewer'] ) ? false : get_term_by( 'slug', sanitize_title( $atts['viewer'] ), 'wpst_viewer' );
+
+		$output = '<div class="wpst-most-watched"><table class="wpst-most-watched-for-';
+		$output .= ( $viewer ) ? $viewer->slug . '-table">' : 'everyone-table">';
+		$output .= '<thead>';
+		$output .= ( $viewer ) ? '<tr><th colspan=2><div class="aligncenter">' . sprintf( __( 'Most Watched Show for %s', 'wp-show-tracker' ), str_replace( '-', ' ', ucwords( $atts['viewer'] ) ) ) . '</div></th></tr>' : '<tr><th colspan=2><div class="aligncenter">' . __( 'Most Watched Show', 'wp-show-tracker' ) . '</div></th></tr>';
+		$output .= '
+				<tr>
+					<th>' . __( 'Title', 'wp-show-tracker' ) . '</th>
+					<th>' . __( 'Count', 'wp-show-tracker' ) . '</th>
+				</tr>
+			</thead>
+		<tbody>';
+
+		$show_count = wpst()->helpers->get_highest_show_count( $viewer->slug );
+		$show_title = wpst()->helpers->get_most_watched( $viewer->slug );
+		$output = '<tr class="show-count" id="show-count-for-' . $slug . '">';
+		$output .= '<td>' . wp_kses_post( $show_title ) . '</td> ';
+		$output .= '<td>' . absint( $show_count ) . '</td>';
+		$output .= '</tr>';
+
+		// Render the shortcode output.
+		ob_start();
+		echo $output; // WPCS: XSS ok. Everything is already sanitized.
+		return ob_get_clean();
+	}
+
 	/**
 	 * Renders the output of the show count this week for viewer.
 	 * @since  0.5.0
