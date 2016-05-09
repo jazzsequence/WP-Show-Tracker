@@ -232,7 +232,7 @@ class WPST_Helpers {
 			set_transient( 'wpst_high_count', $high_count, 24 * HOUR_IN_SECONDS );
 
 			// Save the most watched show in a transient. Gets flushed at the same time as wpst_high_count.
-			set_transient( 'wpst_most_watched', $most_wa, 24 * HOUR_IN_SECONDS );
+			set_transient( 'wpst_most_watched', $most_watched, 24 * HOUR_IN_SECONDS );
 		}
 
 		return $high_count;
