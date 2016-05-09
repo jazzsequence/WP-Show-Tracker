@@ -212,22 +212,42 @@ class WPST_Helpers {
 		$shows = class_exists( 'WP_REST_Controller' ) ? $this->autosuggest_terms() : $this->get_show_list();
 
 		if ( false === ( $high_count = get_transient( 'wpst_high_count' ) ) ) {
-			$high_count = 0;
-			$viewers    = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+			$high_count   = 0;
+			$viewers      = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
+			$most_watched = '';
 
 			// Loop through all the viewers, then loop through and count the shows for each viewer. Set the high count to the largest number.
 			foreach ( $viewers as $viewer ) {
 				foreach ( $shows as $show ) {
-					$show_count = $this->count_unique_shows( $show, $viewer->slug );
-					$high_count = ( $show_count > $high_count ) ? $show_count : $high_count;
+					$show_count   = $this->count_unique_shows( $show, $viewer->slug );
+					$most_watched = ( $show_count > $high_count ) ? $show->post_title : '';
+					$high_count   = ( $show_count > $high_count ) ? $show_count : $high_count;
 				}
 			}
 
 			// Set the transient to expire in 24 hours -- highest count could change tomorrow!
 			set_transient( 'wpst_high_count', $high_count, 24 * HOUR_IN_SECONDS );
+
+			// Save the most watched show in a transient. Gets flushed at the same time as wpst_high_count.
+			set_transient( 'wpst_most_watched', $most_wa, 24 * HOUR_IN_SECONDS );
 		}
 
 		return $high_count;
+	}
+
+	/**
+	 * Returns the title of the most watched show.
+	 * @return string The most watched show title.
+	 */
+	public function get_most_watched() {
+		// If there's no wpst_most_watched transient, run the get_highest_show_count method to generate one.
+		if ( false == ( $most_watched = get_transient( 'wpst_most_watched' ) ) ) {
+			// Run get_highest_show_count to set the most watched show transient.
+			$show_count = $this->get_highest_show_count();
+			return wp_kses_post( get_transient( 'wpst_most_watched' ) );
+		}
+
+		return wp_kses_post( $most_watched );
 	}
 
 	/**

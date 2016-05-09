@@ -175,7 +175,8 @@ class WPST_Show extends CPT_Core {
 			}
 		}
 
-		// Delete the show high count.
+		// Delete the show high count & most watched.
 		delete_transient( 'wpst_high_count' );
+		delete_transient( 'wpst_most_watched' );
 	}
 }
