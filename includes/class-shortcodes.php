@@ -35,7 +35,8 @@ class WPST_Shortcodes {
 	public function hooks() {
 		add_shortcode( 'wpst', array( $this, 'wpst_shortcode' ) );
 		add_shortcode( 'wpst-stats', array( $this, 'stats_shortcode' ) );
-		add_shortcode( 'wp-show-tracker', array( $this, 'cmb2_frontend_form' ) );
+		add_shortcode( 'wpst-most-watched', array( $this, 'most_watched_shortcode' ) );
+		add_shortcode( 'wp-show-tracker', array( $this, 'show_tracker_form' ) );
 		add_action( 'cmb2_after_init', array( $this, 'handle_frontend_new_post_form_submission' ) );
 	}
 
