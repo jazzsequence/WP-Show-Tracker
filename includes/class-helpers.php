@@ -131,7 +131,7 @@ class WPST_Helpers {
 		}
 
 		if ( $shows && ! is_wp_error( $shows ) ) {
-			return $this->unique( $shows );
+			return isset( $args['wpst_viewer'] ) ? $this->unique( $shows, false, sanitize_title( $args['wpst_viewer'] ) ) : $this->unique( $shows );
 		}
 
 		return new WP_Error( 'get_all_show_list_failed', __( 'Get all show list failed.', 'wp-show-tracker' ), $shows );
