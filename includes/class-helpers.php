@@ -237,6 +237,8 @@ class WPST_Helpers {
 
 	/**
 	 * Returns the title of the most watched show.
+	 *
+	 * @since  0.5.2
 	 * @return string The most watched show title.
 	 */
 	public function get_most_watched() {
