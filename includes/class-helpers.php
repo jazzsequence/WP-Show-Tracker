@@ -206,10 +206,13 @@ class WPST_Helpers {
 
 	/**
 	 * Return the highest show count across all shows.
-	 * @return int The most times any show has been viewed across all shows.
+	 *
+	 * @param  string $viewer Limit the scope to shows by a particular viewer.
+	 * @return int            The most times any show has been viewed across all shows.
 	 */
-	public function get_highest_show_count() {
-		$shows = class_exists( 'WP_REST_Controller' ) ? $this->autosuggest_terms() : $this->get_show_list();
+	public function get_highest_show_count( $viewer = '' ) {
+		$viewer = ( '' !== $viewer ) ? array( sanitize_title( $viewer ) ) : false;
+		$shows  = ( class_exists( 'WP_REST_Controller' ) && ! $viewer ) ? $this->autosuggest_terms() : $this->get_show_list( array( 'wpst_viewer' => $viewer ) );
 
 		if ( false === ( $high_count = get_transient( 'wpst_high_count' ) ) ) {
 			$high_count   = 0;
