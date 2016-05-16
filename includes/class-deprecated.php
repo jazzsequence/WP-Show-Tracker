@@ -2,28 +2,28 @@
 /**
  * WP Show Tracker Deprecated
  *
- * @since NEXT
+ * @since 0.6.0
  * @package WP Show Tracker
  */
 
 /**
  * WP Show Tracker Deprecated.
  *
- * @since NEXT
+ * @since 0.6.0
  */
 class WPST_Deprecated {
 	/**
 	 * Parent plugin class
 	 *
 	 * @var   class
-	 * @since NEXT
+	 * @since 0.6.0
 	 */
 	protected $plugin = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @since  NEXT
+	 * @since  0.6.0
 	 * @param  object $plugin Main plugin object.
 	 * @return void
 	 */
@@ -35,18 +35,28 @@ class WPST_Deprecated {
 	/**
 	 * Initiate our hooks
 	 *
-	 * @since  NEXT
+	 * @since  0.6.0
 	 * @return void
 	 */
 	public function hooks() {
 		add_action( 'init', array( $this, 'migrate_from_old_version' ) );
 	}
 
+	/**
+	 * If ?update_show_counts was run on a version of WP Show Tracker that was updated from an old version, increment the counts across all viewings of that show and get rid of the duplicate posts.
+	 *
+	 * @since  0.6.0
+	 */
 	public function migrate_from_old_version() {
 		if ( isset( $_GET ) && ! isset( $_GET['update_show_counts'] ) ) {
 			return;
 		}
-		delete_option( 'wpst_migrated_from_old_version' );
+
+		if ( version_compare( wpst()->__get( 'version' ), '1.0.0', '>=' ) ) {
+			add_option( 'wpst_migrated_from_old_version', true );
+			wp_die( esc_html__( 'You don\'t need to run this update. You are on a non-beta version of WP Show Tracker.', 'wp-show-tracker' ), esc_html__( 'Show Tracker migration not needed.', 'wp-show-tracker' ) );
+		}
+
 		if ( $already_run = get_option( 'wpst_migrated_from_old_version' ) ) {
 			wp_die( esc_html__( 'Migration has already been run. Skipping migration.', 'wp-show-tracker' ), esc_html__( 'Show Tracker migration error', 'wp-show-tracker' ) );
 		}
@@ -80,6 +90,12 @@ class WPST_Deprecated {
 		return ( ! empty( $ids ) ) ? $ids : false ;
 	}
 
+	/**
+	 * Update the first show with data from the duplicates.
+	 *
+	 * @since  0.6.0
+	 * @param  array $ids An array of post IDs reflecting all instances of this show.
+	 */
 	private function process_show( $ids ) {
 		// Bail if we don't have IDs.
 		if ( ! $ids ) {
@@ -116,6 +132,8 @@ class WPST_Deprecated {
 
 	/**
 	 * Get the total count for a particular show across all instances of that show.
+	 *
+	 * @since  0.6.0
 	 * @param  array $show_group Array of WP_Post objects for a particular show.
 	 * @return int               Total count of actual watches for the current show.
 	 */
@@ -130,6 +148,13 @@ class WPST_Deprecated {
 		return $count;
 	}
 
+	/**
+	 * Delete duplicate shows when we're done.
+	 *
+	 * @since  0.6.0
+	 * @param  array $shows   An array of show WP_Post objects.
+	 * @param  int   $omit_id The post ID of the first show in the series that we're leaving.
+	 */
 	private function prune_show( $shows, $omit_id ) {
 		foreach ( $shows as $show_to_delete ) {
 			if ( $omit_id == $show_to_delete->ID ) {
