@@ -96,5 +96,13 @@ class WPST_Deprecated {
 
 		return $count;
 	}
+
+	private function prune_show( $shows, $omit_id ) {
+		foreach ( $shows as $show_to_delete ) {
+			if ( $omit_id == $show_to_delete->ID ) {
+				continue;
+			}
+			wp_delete_post( $show_to_delete->ID );
+		}
 	}
 }
