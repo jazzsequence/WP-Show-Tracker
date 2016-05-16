@@ -116,7 +116,7 @@ class WPST_Deprecated {
 		update_post_meta( $this_show_id, 'wpst_show_count', $watched );
 
 		// Delete all the other show instances.
-		// $this->prune_show( $shows, $this_show_id );
+		$this->prune_show( $shows, $this_show_id );
 
 		// Display a completed screen with an updated list of show counts.
 		echo esc_html( sprintf( __( 'Show %s updated with %d watches.', 'wp-show-tracker' ), $shows[0]->post_title, $watched ) ) . '<br />';
