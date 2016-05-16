@@ -214,6 +214,10 @@ class WPST_Helpers {
 		$viewer = ( '' !== $viewer ) ? array( sanitize_title( $viewer ) ) : false;
 		$shows  = ( class_exists( 'WP_REST_Controller' ) && ! $viewer ) ? $this->autosuggest_terms() : $this->get_show_list( array( 'wpst_viewer' => $viewer ) );
 
+		if ( $viewer ) {
+			// Do stuff that's different and cache it.
+		}
+
 		if ( false === ( $high_count = get_transient( 'wpst_high_count' ) ) ) {
 			$high_count   = 0;
 			$viewers      = get_terms( 'wpst_viewer', array( 'hide_empty' => false ) );
