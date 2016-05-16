@@ -148,6 +148,7 @@ class WP_Show_Tracker {
 		$this->options    = new WPST_Options( $this );
 		$this->helpers    = new WPST_Helpers( $this );
 		$this->shortcodes = new WPST_Shortcodes( $this );
+		$this->deprecated = new WPST_Deprecated( $this );
 
 		// Include the template tags file.
 		require_once( $this->path . '/includes/template-tags.php' );
