@@ -115,11 +115,35 @@ class WPST_Deprecated {
 		// Update the show count with the total count from all other show instances.
 		update_post_meta( $this_show_id, 'wpst_show_count', $watched );
 
+		// Update viewer data, attach viewers to this show.
+		$this->update_viewer_data( $shows, $this_show_id );
+
 		// Delete all the other show instances.
 		$this->prune_show( $shows, $this_show_id );
 
 		// Display a completed screen with an updated list of show counts.
 		echo esc_html( sprintf( __( 'Show %s updated with %d watches.', 'wp-show-tracker' ), $shows[0]->post_title, $watched ) ) . '<br />';
+	}
+
+	/**
+	 * Handles the viewer information for each show.
+	 * This method:
+	 * 	1. Gets the viewers of all the passed shows.
+	 *  2. Adds/appends the viewers of all the shows to the $parent_show_id.
+	 *  3. Calculates the number of views for each viewer for each show.
+	 *  4. Saves those counts for each viewer to the $parent_show_id.
+	 *
+	 * @since  0.6.0
+	 * @param  array $shows          Array of WP_Post objects for a particular show.
+	 * @param  int   $parent_show_id The post ID of the parent show.
+	 * @todo                         Finish this method!!!
+	 */
+	private function update_viewer_data( $shows, $parent_show_id ) {
+		// This method needs to:
+		// 1. Get the viewers of all the passed shows.
+		// 2. Add/append the viewers of all the shows to the $parent_show_id.
+		// 3. Calculate the number of views for each viewer for each show.
+		// 4. Save those counts for each viewer to the $parent_show_id.
 	}
 
 	/**
@@ -132,7 +156,6 @@ class WPST_Deprecated {
 	private function get_show_count( $show_group ) {
 		$count = 0;
 		foreach ( $show_group as $show ) {
-			var_dump($show->post_title);
 			$watched = get_post_meta( $show->ID, 'wpst_show_count', true );
 			$count = $count + absint( $watched );
 		}
