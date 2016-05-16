@@ -80,5 +80,21 @@ class WPST_Deprecated {
 		return ( ! empty( $ids ) ) ? $ids : false ;
 	}
 
+
+	/**
+	 * Get the total count for a particular show across all instances of that show.
+	 * @param  array $show_group Array of WP_Post objects for a particular show.
+	 * @return int               Total count of actual watches for the current show.
+	 */
+	private function get_show_count( $show_group ) {
+		$count = 0;
+		foreach ( $show_group as $show ) {
+			var_dump($show->post_title);
+			$watched = get_post_meta( $show->ID, 'wpst_show_count', true );
+			$count = $count + absint( $watched );
+		}
+
+		return $count;
+	}
 	}
 }
