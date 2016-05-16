@@ -71,5 +71,14 @@ class WPST_Deprecated {
 
 		wp_die();
 	}
+
+	private function get_all_instances_of_show( $show_title ) {
+		global $wpdb;
+
+		$ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_title='$show_title'" );
+
+		return ( ! empty( $ids ) ) ? $ids : false ;
+	}
+
 	}
 }
