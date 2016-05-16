@@ -80,6 +80,39 @@ class WPST_Deprecated {
 		return ( ! empty( $ids ) ) ? $ids : false ;
 	}
 
+	private function process_show( $ids ) {
+		// Bail if we don't have IDs.
+		if ( ! $ids ) {
+			return;
+		}
+		// Get all the instances of this show.
+		$shows = get_posts( array(
+			'post_type'  => 'wpst_show',
+			'post__in'   => $ids,
+			'order'      => 'ASC',
+			'nopaging'   => true,
+		) );
+
+		// Bail if we don't have any shows.
+		if ( empty( $shows ) ) {
+			return;
+		}
+
+		// First let's get a total count of all the times this show was watched.
+		$watched = $this->get_show_count( $shows );
+
+		// The first instance of this show should be the first element in the array.
+		$this_show_id = $shows[0]->ID;
+
+		// Update the show count with the total count from all other show instances.
+		update_post_meta( $this_show_id, 'wpst_show_count', $watched );
+
+		// Delete all the other show instances.
+		// $this->prune_show( $shows, $this_show_id );
+
+		// Display a completed screen with an updated list of show counts.
+		echo esc_html( sprintf( __( 'Show %s updated with %d watches.', 'wp-show-tracker' ), $shows[0]->post_title, $watched ) ) . '<br />';
+	}
 
 	/**
 	 * Get the total count for a particular show across all instances of that show.
