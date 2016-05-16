@@ -138,6 +138,19 @@ class WPST_Helpers {
 	}
 
 	/**
+	 * Returns an array of matching show IDs by show title.
+	 * @param  string $show_title The exact match show title.
+	 * @return array|bool         An array of show IDs or false if none were found.
+	 */
+	public function get_show_id_by_title( $show_title ) {
+		global $wpdb;
+
+		$ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_title='$show_title'" );
+
+		return ( ! empty( $ids ) ) ? $ids : false ;
+	}
+
+	/**
 	 * Get an array of only the unique show names.
 	 * @param  array  $shows   An array of show names.
 	 * @param  bool   $use_api Whether the passed shows array is coming from the WP-API.

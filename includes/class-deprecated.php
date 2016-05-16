@@ -73,21 +73,13 @@ class WPST_Deprecated {
 				continue;
 			}
 
-			$this->process_show( $this->get_all_instances_of_show( $show_group ) );
+			$this->process_show( wpst()->helpers->get_show_id_by_title( $show_group ) );
 		}
 
 		// Make sure we don't run this again.
 		// add_option( 'wpst_migrated_from_old_version', true );
 
 		wp_die();
-	}
-
-	private function get_all_instances_of_show( $show_title ) {
-		global $wpdb;
-
-		$ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_title='$show_title'" );
-
-		return ( ! empty( $ids ) ) ? $ids : false ;
 	}
 
 	/**
