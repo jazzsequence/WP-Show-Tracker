@@ -77,7 +77,7 @@ class WPST_Deprecated {
 		}
 
 		// Make sure we don't run this again.
-		// add_option( 'wpst_migrated_from_old_version', true );
+		add_option( 'wpst_migrated_from_old_version', true );
 
 		wp_die();
 	}
