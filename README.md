@@ -6,7 +6,7 @@
 **Tags:**  
 **Requires at least:** 4.3  
 **Tested up to:**      4.3  
-**Stable tag:**        0.5.2  
+**Stable tag:**        0.6.0  
 **License:**           GPLv3  
 **License URI:**       http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -33,7 +33,16 @@ Track shows that you (or your kids) watch. Set a weekly limit and display an ale
 
 ![options page](https://www.evernote.com/l/ABPbIgidTaNA3boDDEEjCbdfM5uEbzPBlLwB/image.png)
 
+## Upgrade Notice ##
+
+### 0.6.0 ###
+In 0.6.0 a major refactor in how shows were stored was made. If you were using WP Show Tracker prior to 0.6.0, you should run run the migration script to update your show data. This is done by adding ?update_show_counts to your site's URL in the wp-admin, e.g. `http://mysite.com/wp-admin/?update_show_counts`.
+
 ## Changelog ##
+
+### 0.6.0 ###
+* Refactored how shows are stored. Instead of many duplicate entries for a single show, each show is saved once with viewings stored to that single show entry. This allows the possibility to hook into other APIs and/or add more show data for each show.
+* As part of this refactor, built a migration tool for users who have been using beta versions of Show Tracker.
 
 ### 0.5.2 ###
 * Added progress bars to show counts for users.
