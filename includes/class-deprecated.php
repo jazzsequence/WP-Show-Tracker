@@ -67,16 +67,26 @@ class WPST_Deprecated {
 		// Get all the unique shows.
 		$shows = wpst()->helpers->get_show_list();
 
-		echo '<h3>' . esc_html_e( 'Shows updated', 'wp-show-tracker' ) . '</h3>';
+		// Check for errors.
+		if ( ! isset( $shows->errors ) ) {
+			echo '<h3>' . esc_html_e( 'Shows updated', 'wp-show-tracker' ) . '</h3>';
 
-		// Each show probably has multiple different shows of that same title. Process each show individually.
-		foreach ( $shows as $show_group ) {
-			// Skip shows with no title.
-			if ( '' == $show_group ) {
-				continue;
+			// Each show probably has multiple different shows of that same title. Process each show individually.
+			foreach ( $shows as $show_group ) {
+				// Skip shows with no title.
+				if ( '' == $show_group ) {
+					continue;
+				}
+
+				$this->process_show( wpst()->helpers->get_show_id_by_title( $show_group ) );
 			}
 
-			$this->process_show( wpst()->helpers->get_show_id_by_title( $show_group ) );
+			// Make sure we don't run this again.
+			add_option( 'wpst_migrated_from_old_version', true );
+		} else {
+			foreach ( $shows->errors as $key => $value ) {
+				esc_attr_e( $value[0] );
+			}
 		}
 
 		// Make sure we don't run this again.
