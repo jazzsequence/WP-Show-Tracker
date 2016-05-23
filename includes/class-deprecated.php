@@ -168,6 +168,34 @@ class WPST_Deprecated {
 	}
 
 	/**
+	 * Return an array that includes a count of all the times a viewer has watched a particular show.
+	 *
+	 * @since  0.6.0
+	 * @param  array  $shows  Array of WP_Post objects for a particular show.
+	 * @param  string $viewer The viewer term name.
+	 * @return array          An array of show information for the viewer for a particular show.
+	 */
+	private function get_this_viewers_shows( $shows, $viewer ) {
+		$this_viewers_shows = array();
+
+		// Loop through the shows and calculate the number of views for each viewer for each show.
+		foreach ( $shows as $show ) {
+			$this_viewers_shows[ $show->ID ] = array(
+				'slug'  => $show->post_name,
+				'ID'    => $show->ID,
+				'count' => 0,
+			);
+
+			// Check if this show was watched by this viewer.
+			if ( has_term( $viewer, 'wpst_viewer', $show ) ) {
+				$this_viewers_shows[ $show->ID ]['count'] = $this_viewers_shows[ $show->ID ]['count'] + get_post_meta( $show->ID, 'wpst_show_count', true );
+			}
+		}
+
+		return $this_viewers_shows;
+	}
+
+	/**
 	 * Handles the viewings for each show. Gets the viewers for all the passed shows & records the viewings for each viewer to the parent show.
 	 *
 	 * @since  0.6.0
