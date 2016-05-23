@@ -122,6 +122,7 @@ class WPST_Show extends CPT_Core {
 	 */
 	public function columns( $columns ) {
 		$new_columns = array(
+			'cb'                   => '<input type="checkbox">',
 			'title'                => __( 'Show Title', 'wp-show-tracker' ),
 			'date_watched'         => __( 'Date Watched', 'wp-show-tracker' ),
 			'taxonomy-wpst_viewer' => __( 'Viewer', 'wp-show-tracker' ),
