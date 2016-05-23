@@ -147,6 +147,33 @@ class WPST_Deprecated {
 	}
 
 	/**
+	 * Handles the viewings for each show. Gets the viewers for all the passed shows & records the viewings for each viewer to the parent show.
+	 *
+	 * @since  0.6.0
+	 * @param  array $shows          Array of WP_Post objects for a particular show.
+	 * @param  int   $parent_show_id The post ID of the parent show.
+	 */
+	private function update_viewings( $shows, $parent_show_id ) {
+		// This method needs to:
+		// 1. Get the viewers of all the passed shows.
+		// 2. Record viewings for each viewer to the $parent_show_id as meta entries.
+	}
+
+	/**
+	 * Get the viewer terms for an array of passed shows.
+	 *
+	 * @since  0.6.0
+	 * @param  array $shows Array of WP_Post objects for a particular show.
+	 * @return array        Array of viewer terms.
+	 */
+	private function get_viewers_for_shows( $shows ) {
+		// This method needs to:
+		// 1. Loop through all the shows.
+		// 2. Store the viewer term in an array.
+		// 3. Return the array of viewers.
+	}
+
+	/**
 	 * Get the total count for a particular show across all instances of that show.
 	 *
 	 * @since  0.6.0
