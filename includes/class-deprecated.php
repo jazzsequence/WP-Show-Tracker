@@ -156,9 +156,15 @@ class WPST_Deprecated {
 		$viewers = $this->get_viewers_for_shows( $shows );
 
 		// This method needs to:
-		// 2. Add/append the viewers of all the shows to the $parent_show_id.
 		// 3. Calculate the number of views for each viewer for each show.
 		// 4. Save those counts for each viewer to the $parent_show_id.
+		// Add/append the viewers of all the shows to the $parent_show_id.
+		foreach ( $viewers as $viewer ) {
+			$this_viewer  = $viewer[0]->name;
+
+			wp_set_object_terms( $parent_show_id, $this_viewer, 'wpst_viewer', true );
+
+		}
 	}
 
 	/**
