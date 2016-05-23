@@ -155,8 +155,6 @@ class WPST_Deprecated {
 		// Get the viewers of all the passed shows.
 		$viewers = $this->get_viewers_for_shows( $shows );
 
-		// This method needs to:
-		// 4. Save those counts for each viewer to the $parent_show_id.
 		// Loop through all the viewers.
 		foreach ( $viewers as $viewer ) {
 			$this_viewer  = $viewer[0]->name;
@@ -167,6 +165,8 @@ class WPST_Deprecated {
 			// Calculate the number of views for each viewer for each show.
 			$this_viewers_shows = $this->get_this_viewers_shows( $shows, $this_viewer );
 
+			// Save those counts for each viewer to the $parent_show_id.
+			$this->update_parent_show_post_meta( $this_viewers_shows, $parent_show_id, $viewer->slug );
 		}
 	}
 
