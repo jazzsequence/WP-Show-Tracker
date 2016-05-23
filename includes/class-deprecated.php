@@ -52,13 +52,16 @@ class WPST_Deprecated {
 			return;
 		}
 
-		if ( version_compare( wpst()->__get( 'version' ), '1.0.0', '>=' ) ) {
-			add_option( 'wpst_migrated_from_old_version', true );
-			wp_die( esc_html__( 'You don\'t need to run this update. You are on a non-beta version of WP Show Tracker.', 'wp-show-tracker' ), esc_html__( 'Show Tracker migration not needed.', 'wp-show-tracker' ) );
-		}
+		// Only run the checks if debugging is turned off.
+		if ( ! defined( 'WP_DEBUG' ) || defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+			if ( version_compare( wpst()->__get( 'version' ), '1.0.0', '>=' ) ) {
+				add_option( 'wpst_migrated_from_old_version', true );
+				wp_die( esc_html__( 'You don\'t need to run this update. You are on a non-beta version of WP Show Tracker.', 'wp-show-tracker' ), esc_html__( 'Show Tracker migration not needed.', 'wp-show-tracker' ) );
+			}
 
-		if ( $already_run = get_option( 'wpst_migrated_from_old_version' ) ) {
-			wp_die( esc_html__( 'Migration has already been run. Skipping migration.', 'wp-show-tracker' ), esc_html__( 'Show Tracker migration error', 'wp-show-tracker' ) );
+			if ( $already_run = get_option( 'wpst_migrated_from_old_version' ) ) {
+				wp_die( esc_html__( 'Migration has already been run. Skipping migration.', 'wp-show-tracker' ), esc_html__( 'Show Tracker migration error', 'wp-show-tracker' ) );
+			}
 		}
 
 		// Get all the unique shows.
