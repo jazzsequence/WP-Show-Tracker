@@ -128,6 +128,9 @@ class WPST_Deprecated {
 		// Update viewer data, attach viewers to this show.
 		$this->update_viewer_data( $shows, $this_show_id );
 
+		// Update viewings, attach each sitting to this show.
+		$this->update_viewings( $shows, $this_show_id );
+
 		// Delete all the other show instances.
 		$this->prune_show( $shows, $this_show_id );
 
