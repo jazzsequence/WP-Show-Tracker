@@ -199,6 +199,21 @@ class WPST_Deprecated {
 	}
 
 	/**
+	 * Update the post meta of the parent show post with the count of times a particular viewer has watched this show.
+	 *
+	 * @since  0.6.0
+	 * @param  array  $shows          Array of WP_Post objects for a particular show.
+	 * @param  int    $parent_show_id The parent show post ID.
+	 * @param  string $viewer         The post slug of the viewer.
+	 */
+	private function update_parent_show_post_meta( $shows, $parent_show_id, $viewer ) {
+		// Save those counts for each viewer to the $parent_show_id.
+		foreach ( $shows as $show ) {
+			update_post_meta( $parent_show_id, 'wpst_' . $viewer . '_count', absint( $show['count'] ) );
+		}
+	}
+
+	/**
 	 * Handles the viewings for each show. Gets the viewers for all the passed shows & records the viewings for each viewer to the parent show.
 	 *
 	 * @since  0.6.0
