@@ -152,8 +152,10 @@ class WPST_Deprecated {
 	 * @todo                         Finish this method!!!
 	 */
 	private function update_viewer_data( $shows, $parent_show_id ) {
+		// Get the viewers of all the passed shows.
+		$viewers = $this->get_viewers_for_shows( $shows );
+
 		// This method needs to:
-		// 1. Get the viewers of all the passed shows.
 		// 2. Add/append the viewers of all the shows to the $parent_show_id.
 		// 3. Calculate the number of views for each viewer for each show.
 		// 4. Save those counts for each viewer to the $parent_show_id.
@@ -167,6 +169,9 @@ class WPST_Deprecated {
 	 * @param  int   $parent_show_id The post ID of the parent show.
 	 */
 	private function update_viewings( $shows, $parent_show_id ) {
+		// Get the viewers of all the passed shows.
+		$viewers = $this->get_viewers_for_shows( $shows );
+
 		// This method needs to:
 		// 1. Get the viewers of all the passed shows.
 		// 2. Record viewings for each viewer to the $parent_show_id as meta entries.
@@ -180,10 +185,11 @@ class WPST_Deprecated {
 	 * @return array        Array of viewer terms.
 	 */
 	private function get_viewers_for_shows( $shows ) {
-		// This method needs to:
-		// 1. Loop through all the shows.
-		// 2. Store the viewer term in an array.
-		// 3. Return the array of viewers.
+		foreach ( $shows as $show ) {
+			$viewers[] = wp_get_post_terms( $show->ID, 'wpst_viewer' );
+		}
+
+		return $viewers;
 	}
 
 	/**
