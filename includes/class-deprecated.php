@@ -164,6 +164,8 @@ class WPST_Deprecated {
 
 			wp_set_object_terms( $parent_show_id, $this_viewer, 'wpst_viewer', true );
 
+			$this_viewers_shows = $this->get_this_viewers_shows( $shows, $this_viewer );
+
 		}
 	}
 
