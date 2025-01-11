@@ -2,7 +2,7 @@
     "name": "jazzsequence/wp-show-tracker",
     "description": "Track shows that you (or your kids) watch. Set a weekly limit and display an alert when the limit is reached.",
     "type": "wordpress-plugin",
-    "license": "GPL-2.0-or-later",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Chris Reynolds",
